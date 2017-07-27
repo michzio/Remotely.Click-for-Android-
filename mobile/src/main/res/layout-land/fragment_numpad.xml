@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="click.remotely.android.fragments.NumpadFragment">
+
+    <Button
+        android:id="@+id/numpad_7_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:text="@string/numpad_7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/numpad_8_btn"
+        app:layout_constraintBottom_toTopOf="@+id/numpad_4_btn"
+        android:theme="@style/AppTheme.ButtonLight"/>
+
+    <Button
+        android:id="@+id/numpad_8_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:text="@string/numpad_8"
+        app:layout_constraintStart_toEndOf="@+id/numpad_7_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/numpad_9_btn"
+        app:layout_constraintBottom_toTopOf="@+id/numpad_5_btn"
+        android:theme="@style/AppTheme.ButtonLight" />
+
+    <Button
+        android:id="@+id/numpad_9_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:text="@string/numpad_9"
+        app:layout_constraintStart_toEndOf="@+id/numpad_8_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/numpad_clear_btn"
+        app:layout_constraintBottom_toTopOf="@+id/numpad_6_btn"
+        android:theme="@style/AppTheme.ButtonLight" />
+
+    <Button
+        android:id="@+id/numpad_clear_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:text="@string/numpad_clear"
+        app:layout_constraintStart_toEndOf="@+id/numpad_9_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/numpad_minus_sign_btn"
+        app:layout_constraintBottom_toTopOf="@+id/numpad_equal_sign_btn"
+        android:theme="@style/AppTheme.Button" />
+
+
+    <Button
+        android:id="@+id/numpad_minus_sign_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="0dp"
+        android:text="@string/numpad_minus_sign"
+        app:layout_constraintStart_toEndOf="@+id/numpad_clear_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/numpad_plus_sign_btn"
+        android:theme="@style/AppTheme.Button" />
+
+    <Button
+        android:id="@+id/numpad_4_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:text="@string/numpad_4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numpad_7_btn"
+        app:layout_constraintEnd_toStartOf="@+id/numpad_5_btn"
+        app:layout_constraintBottom_toTopOf="@+id/numpad_1_btn"
+        android:theme="@style/AppTheme.ButtonLight" />
+
+    <Button
+        android:id="@+id/numpad_5_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:text="@string/numpad_5"
+        app:layout_constraintStart_toEndOf="@+id/numpad_4_btn"
+        app:layout_constraintTop_toBottomOf="@+id/numpad_8_btn"
+        app:layout_constraintEnd_toStartOf="@+id/numpad_6_btn"
+        app:layout_constraintBottom_toTopOf="@+id/numpad_2_btn"
+        android:theme="@style/AppTheme.ButtonLight" />
+
+    <Button
+        android:id="@+id/numpad_6_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:text="@string/numpad_6"
+        app:layout_constraintStart_toEndOf="@+id/numpad_5_btn"
+        app:layout_constraintTop_toBottomOf="@+id/numpad_9_btn"
+        app:layout_constraintEnd_toStartOf="@+id/numpad_equal_sign_btn"
+        app:layout_constraintBottom_toTopOf="@+id/numpad_3_btn"
+        android:theme="@style/AppTheme.ButtonLight" />
+
+    <Button
+        android:id="@+id/numpad_equal_sign_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:text="@string/numpad_equal_sign"
+        app:layout_constraintStart_toEndOf="@+id/numpad_6_btn"
+        app:layout_constraintTop_toBottomOf="@id/numpad_clear_btn"
+        app:layout_constraintEnd_toStartOf="@+id/numpad_plus_sign_btn"
+        app:layout_constraintBottom_toTopOf="@+id/numpad_divide_sign_btn"
+        android:theme="@style/AppTheme.Button" />
+
+    <Button
+        android:id="@+id/numpad_plus_sign_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="0dp"
+        android:text="@string/numpad_plus_sign"
+        app:layout_constraintStart_toEndOf="@+id/numpad_equal_sign_btn"
+        app:layout_constraintTop_toBottomOf="@+id/numpad_minus_sign_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/numpad_enter_btn"
+        android:theme="@style/AppTheme.Button" />
+
+    <Button
+        android:id="@+id/numpad_1_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:text="@string/numpad_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numpad_4_btn"
+        app:layout_constraintEnd_toStartOf="@+id/numpad_2_btn"
+        app:layout_constraintBottom_toTopOf="@+id/numpad_0_btn"
+        android:theme="@style/AppTheme.ButtonLight" />
+
+    <Button
+        android:id="@+id/numpad_2_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:text="@string/numpad_2"
+        app:layout_constraintStart_toEndOf="@+id/numpad_1_btn"
+        app:layout_constraintTop_toBottomOf="@+id/numpad_5_btn"
+        app:layout_constraintEnd_toStartOf="@+id/numpad_3_btn"
+        app:layout_constraintBottom_toTopOf="@+id/numpad_0_btn"
+        android:theme="@style/AppTheme.ButtonLight" />
+
+    <Button
+        android:id="@+id/numpad_3_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:text="@string/numpad_3"
+        app:layout_constraintStart_toEndOf="@+id/numpad_2_btn"
+        app:layout_constraintTop_toBottomOf="@+id/numpad_6_btn"
+        app:layout_constraintEnd_toStartOf="@+id/numpad_divide_sign_btn"
+        app:layout_constraintBottom_toTopOf="@+id/numpad_decimal_point_btn"
+        android:theme="@style/AppTheme.ButtonLight" />
+
+    <Button
+        android:id="@+id/numpad_divide_sign_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:text="@string/numpad_divide_sign"
+        app:layout_constraintStart_toEndOf="@+id/numpad_3_btn"
+        app:layout_constraintTop_toBottomOf="@+id/numpad_equal_sign_btn"
+        app:layout_constraintEnd_toStartOf="@+id/numpad_enter_btn"
+        app:layout_constraintBottom_toTopOf="@+id/numpad_multiply_sign_btn"
+        android:theme="@style/AppTheme.Button" />
+
+
+    <Button
+        android:id="@+id/numpad_enter_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/numpad_enter"
+        app:layout_constraintStart_toEndOf="@+id/numpad_divide_sign_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/numpad_divide_sign_btn"
+        android:theme="@style/AppTheme.Button" />
+
+    <Button
+        android:id="@+id/numpad_0_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/numpad_0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numpad_1_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/numpad_2_btn"
+        android:theme="@style/AppTheme.ButtonLight" />
+
+    <Button
+        android:id="@+id/numpad_decimal_point_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/numpad_decimal_point"
+        app:layout_constraintStart_toEndOf="@+id/numpad_2_btn"
+        app:layout_constraintTop_toBottomOf="@+id/numpad_3_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/numpad_3_btn"
+        android:theme="@style/AppTheme.ButtonLight" />
+
+    <Button
+        android:id="@+id/numpad_multiply_sign_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/numpad_multiply_sign"
+        app:layout_constraintStart_toEndOf="@+id/numpad_decimal_point_btn"
+        app:layout_constraintTop_toBottomOf="@+id/numpad_divide_sign_btn"
+        app:layout_constraintEnd_toStartOf="@+id/numpad_enter_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:theme="@style/AppTheme.Button" />
+
+</android.support.constraint.ConstraintLayout>

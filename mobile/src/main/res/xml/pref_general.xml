@@ -1,0 +1,26 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="pref_auto_connection"
+        android:summary="@string/pref_description_auto_connection"
+        android:title="@string/pref_title_auto_connection" />
+
+    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+    <EditTextPreference
+        android:capitalize="words"
+        android:inputType="textCapWords"
+        android:key="pref_device_identity"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_device_identity" />
+
+    <!-- This preference simply launches an intent when selected. Use this UI sparingly, per
+        design guidelines. -->
+    <Preference android:title="@string/pref_title_system_wifi_settings">
+        <intent android:action="android.settings.WIFI_SETTINGS" />
+    </Preference>
+
+</PreferenceScreen>

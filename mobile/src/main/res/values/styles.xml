@@ -1,11 +1,47 @@
 <resources>
-
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
+    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">@color/textColorAppBar</item>
+    </style>
+    <style name="AppTheme.PopupOverly" parent="ThemeOverlay.AppCompat.Light">
+
+    </style>
+    <style name="AppTheme.Button" parent="Base.Widget.AppCompat.Button">
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="AppTheme.ButtonDark" parent="Base.Widget.AppCompat.Button">
+        <item name="colorButtonNormal">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="AppTheme.ButtonRed" parent="Base.Widget.AppCompat.Button">
+        <item name="colorButtonNormal">@android:color/holo_red_light</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="AppTheme.ButtonLight" parent="Base.Widget.AppCompat.Button">
+        <item name="colorButtonNormal">@android:color/white</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+    <style name="AppTheme.ToggleButton" parent="Base.Widget.AppCompat.Button">
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="colorAccent">@android:color/white</item>
+    </style>
+    <style name="SelectableItemTheme">
+        <item name="colorControlHighlight">@color/rippleColor</item>
+    </style>
+    <style name="SelectableItemBackground">
+        <item name="android:theme">@style/SelectableItemTheme</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
 </resources>

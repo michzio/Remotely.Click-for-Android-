@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="keyboard_grave_map">
+        <item>@string/keyboard_grave</item>
+        <item>@string/keyboard_tilde</item>
+    </string-array>
+    <string-array name="keyboard_1_map">
+        <item>@string/keyboard_1</item>
+        <item>@string/keyboard_exclamation_mark</item>
+    </string-array>
+    <string-array name="keyboard_2_map">
+        <item>@string/keyboard_2</item>
+        <item>@string/keyboard_at_sign</item>
+    </string-array>
+    <string-array name="keyboard_3_map">
+        <item>@string/keyboard_3</item>
+        <item>@string/keyboard_hash</item>
+    </string-array>
+    <string-array name="keyboard_4_map">
+        <item>@string/keyboard_4</item>
+        <item>@string/keyboard_dollar_sign</item>
+    </string-array>
+    <string-array name="keyboard_5_map">
+        <item>@string/keyboard_5</item>
+        <item>@string/keyboard_percent_sign</item>
+    </string-array>
+    <string-array name="keyboard_6_map">
+        <item>@string/keyboard_6</item>
+        <item>@string/keyboard_caret</item>
+    </string-array>
+    <string-array name="keyboard_7_map">
+        <item>@string/keyboard_7</item>
+        <item>@string/keyboard_ampersand</item>
+    </string-array>
+    <string-array name="keyboard_8_map">
+        <item>@string/keyboard_8</item>
+        <item>@string/keyboard_asterisk</item>
+    </string-array>
+    <string-array name="keyboard_9_map">
+        <item>@string/keyboard_9</item>
+        <item>@string/keyboard_left_parenthesis</item>
+    </string-array>
+    <string-array name="keyboard_0_map">
+        <item>@string/keyboard_0</item>
+        <item>@string/keyboard_right_parenthesis</item>
+    </string-array>
+    <string-array name="keyboard_minus_map">
+        <item>@string/keyboard_minus</item>
+        <item>@string/keyboard_underscore</item>
+    </string-array>
+    <string-array name="keyboard_equal_map">
+        <item>@string/keyboard_equal</item>
+        <item>@string/keyboard_plus</item>
+    </string-array>
+    <string-array name="keyboard_left_bracket_map">
+        <item>@string/keyboard_left_bracket</item>
+        <item>@string/keyboard_left_curly_brace</item>
+    </string-array>
+    <string-array name="keyboard_right_bracket_map">
+        <item>@string/keyboard_right_bracket</item>
+        <item>@string/keyboard_right_curly_brace</item>
+    </string-array>
+    <string-array name="keyboard_backslash_map">
+        <item>@string/keyboard_backslash</item>
+        <item>@string/keyboard_pipe</item>
+    </string-array>
+    <string-array name="keyboard_semicolon_map">
+        <item>@string/keyboard_semicolon</item>
+        <item>@string/keyboard_colon</item>
+    </string-array>
+    <string-array name="keyboard_quote_map">
+        <item>@string/keyboard_quote</item>
+        <item>@string/keyboard_double_quote</item>
+    </string-array>
+    <string-array name="keyboard_comma_map">
+        <item>@string/keyboard_comma</item>
+        <item>@string/keyboard_left_angle_bracket</item>
+    </string-array>
+    <string-array name="keyboard_period_map">
+        <item>@string/keyboard_period</item>
+        <item>@string/keyboard_right_angle_bracket</item>
+    </string-array>
+    <string-array name="keyboard_slash_map">
+        <item>@string/keyboard_slash</item>
+        <item>@string/keyboard_question_mark</item>
+    </string-array>
+</resources>

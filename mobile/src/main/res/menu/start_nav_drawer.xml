@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+    <item android:title="@string/menu_remote_hardware">
+        <menu>
+            <item
+                android:id="@+id/nav_touchpad"
+                android:title="@string/action_touchpad"
+                android:icon="@drawable/ic_touchpad_black_24dp"
+                android:checkable="true" />
+            <item
+                android:id="@+id/nav_mouse"
+                android:title="@string/action_mouse"
+                android:icon="@drawable/ic_mouse_black_24dp"
+                android:checkable="true" />
+            <item
+                android:id="@+id/nav_keyboard"
+                android:title="@string/action_keyboard"
+                android:icon="@drawable/ic_keyboard_black_24dp"
+                android:checkable="true" />
+            <item
+                android:id="@+id/nav_numpad"
+                android:title="@string/action_numpad"
+                android:icon="@drawable/ic_numpad_black_24dp"
+                android:checkable="true"
+                />
+            <item
+                android:id="@+id/nav_gamepad"
+                android:title="@string/action_gamepad"
+                android:icon="@drawable/ic_videogame_asset_black_24dp"
+                android:checkable="true" />
+            <item
+                android:id="@+id/nav_touchscreen"
+                android:title="@string/action_touchscreen"
+                android:icon="@drawable/ic_touchscreen_black_24dp"
+                android:checkable="true" />
+        </menu>
+    </item>
+    <item android:title="@string/menu_app_controls">
+        <menu>
+            <item
+                android:id="@+id/nav_media_player"
+                android:title="@string/action_media_player"
+                android:icon="@drawable/ic_media_player_black_24dp"
+                android:checkable="true" />
+            <item
+                android:id="@+id/nav_slideshow"
+                android:title="@string/action_slide_show"
+                android:icon="@drawable/ic_slideshow_black_24dp"
+                android:checkable="true" />
+            <item
+                android:id="@+id/nav_browser"
+                android:title="@string/action_browser"
+                android:icon="@drawable/ic_browser_black_24dp"
+                android:checkable="true" />
+        </menu>
+    </item>
+    <item android:title="@string/menu_system_controls">
+        <menu>
+            <item
+                android:id="@+id/nav_power_controls"
+                android:title="@string/action_power_controls"
+                android:icon="@drawable/ic_power_black_24dp"
+                android:checkable="true" />
+            <item
+                android:id="@+id/nav_shortcuts"
+                android:title="@string/action_shortcuts"
+                android:icon="@drawable/ic_shortcuts_black_24dp"
+                android:checkable="true" />
+        </menu>
+    </item>
+    </group>
+</menu>

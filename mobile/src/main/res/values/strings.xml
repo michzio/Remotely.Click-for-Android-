@@ -1,3 +1,205 @@
 <resources>
     <string name="app_name">Remotely.Click</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="menu_remote_hardware">Remote Hardware</string>
+    <string name="action_touchpad">Touchpad</string>
+    <string name="action_mouse">Mouse</string>
+    <string name="action_keyboard">Keyboard</string>
+    <string name="action_numpad">Numpad</string>
+    <string name="action_gamepad">Gamepad</string>
+    <string name="action_touchscreen">Touchscreen</string>
+    <string name="menu_app_controls">App Controls</string>
+    <string name="action_media_player">Media Player</string>
+    <string name="action_slide_show">Slide Show</string>
+    <string name="action_browser">Browser</string>
+    <string name="menu_system_controls">System Controls</string>
+    <string name="action_power_controls">Power Controls</string>
+    <string name="action_shortcuts">Shortcuts</string>
+
+    <string name="action_remote_devices">Remote Devices</string>
+    <string name="action_console">Console</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_remote_devices">Remote Devices</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- General settings -->
+    <string name="pref_header_general_title">General</string>
+    <string name="pref_header_general_description">Auto connection, device identity, WiFi connection</string>
+
+    <string name="pref_title_auto_connection">Enable auto connection</string>
+    <string name="pref_description_auto_connection">Try to auto connect remote device if only one is available or possible connection with last used configuration</string>
+
+    <string name="pref_title_device_identity">Device identity</string>
+    <string name="pref_default_device_identity">Android</string>
+
+    <string name="pref_title_system_wifi_settings">System Wi-Fi settings</string>
+
+    <!-- Notifications settings -->
+    <string name="pref_header_notifications_title">Notifications</string>
+    <string name="pref_header_notifications_description">Turn on/off connection notification, set ringtone and vibrations.</string>
+
+    <string name="pref_category_title_connection_success_notifications">CONNECTION SUCCESS NOTIFICATIONS</string>
+
+    <string name="pref_title_connection_success_notifications">Enable success notifications</string>
+    <string name="pref_description_connection_success_notifications">Enable ringtone and vibration notifications while connecting new remote device successfully.</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+
+    <string name="pref_category_title_connection_failure_notifications">CONNECTION FAILURE NOTIFICATIONS</string>
+
+    <string name="pref_title_connection_failure_notifications">Enable failure notifications</string>
+    <string name="pref_description_connection_failure_notifications">Enable ringtone and vibration notifications while connecting remote device failed.</string>
+
+    <!-- Security settings -->
+    <string name="pref_header_security_title">Security</string>
+    <string name="pref_header_security_description">Set password to connect to remote server.</string>
+
+    <string name="pref_title_security_password">Security Password</string>
+    <string name="pref_description_security_password">Should match the one set on server side.</string>
+
+    <!-- NumpadFragment layout text -->
+    <string name="numpad_clear">Clear</string>
+    <string name="numpad_equal_sign">=</string>
+    <string name="numpad_divide_sign">/</string>
+    <string name="numpad_multiply_sign">*</string>
+    <string name="numpad_7">7</string>
+    <string name="numpad_8">8</string>
+    <string name="numpad_9">9</string>
+    <string name="numpad_minus_sign">-</string>
+    <string name="numpad_4">4</string>
+    <string name="numpad_5">5</string>
+    <string name="numpad_6">6</string>
+    <string name="numpad_plus_sign">+</string>
+    <string name="numpad_1">1</string>
+    <string name="numpad_2">2</string>
+    <string name="numpad_3">3</string>
+    <string name="numpad_0">0</string>
+    <string name="numpad_decimal_point">.</string>
+    <string name="numpad_enter">Enter</string>
+
+    <!-- KeyboardFragment layout text -->
+    <string name="keyboard_esc">esc</string>
+    <string name="keyboard_f1">F1</string>
+    <string name="keyboard_f2">F2</string>
+    <string name="keyboard_f3">F3</string>
+    <string name="keyboard_f4">F4</string>
+    <string name="keyboard_f5">F5</string>
+    <string name="keyboard_f6">F6</string>
+    <string name="keyboard_f7">F7</string>
+    <string name="keyboard_f8">F8</string>
+    <string name="keyboard_f9">F9</string>
+    <string name="keyboard_f10">F10</string>
+    <string name="keyboard_f11">F11</string>
+    <string name="keyboard_f12">F12</string>
+    <string name="keyboard_grave">`</string>
+    <string name="keyboard_tilde">~</string>
+    <string name="keyboard_1">1</string>
+    <string name="keyboard_exclamation_mark">!</string>
+    <string name="keyboard_2">2</string>
+    <string name="keyboard_at_sign">\@</string>
+    <string name="keyboard_3">3</string>
+    <string name="keyboard_hash">#</string>
+    <string name="keyboard_4">4</string>
+    <string name="keyboard_dollar_sign">$</string>
+    <string name="keyboard_5">5</string>
+    <string name="keyboard_percent_sign">%</string>
+    <string name="keyboard_6">6</string>
+    <string name="keyboard_caret">^</string>
+    <string name="keyboard_7">7</string>
+    <string name="keyboard_ampersand">\u0026</string>
+    <string name="keyboard_8">8</string>
+    <string name="keyboard_asterisk">*</string>
+    <string name="keyboard_9">9</string>
+    <string name="keyboard_left_parenthesis">(</string>
+    <string name="keyboard_0">0</string>
+    <string name="keyboard_right_parenthesis">)</string>
+    <string name="keyboard_minus">-</string>
+    <string name="keyboard_underscore">_</string>
+    <string name="keyboard_equal">=</string>
+    <string name="keyboard_plus">+</string>
+    <string name="keyboard_backspace">\u232B</string>
+    <string name="keyboard_tab">tab \u21B9</string>
+    <string name="keyboard_Q">q</string>
+    <string name="keyboard_W">w</string>
+    <string name="keyboard_E">e</string>
+    <string name="keyboard_R">r</string>
+    <string name="keyboard_T">t</string>
+    <string name="keyboard_Y">y</string>
+    <string name="keyboard_U">u</string>
+    <string name="keyboard_I">i</string>
+    <string name="keyboard_O">o</string>
+    <string name="keyboard_P">p</string>
+    <string name="keyboard_left_bracket">[</string>
+    <string name="keyboard_left_curly_brace">{</string>
+    <string name="keyboard_right_bracket">]</string>
+    <string name="keyboard_right_curly_brace">}</string>
+    <string name="keyboard_backslash">\\</string>
+    <string name="keyboard_pipe">|</string>
+    <string name="keyboard_caps_lock">caps \u21EA</string>
+    <string name="keyboard_A">a</string>
+    <string name="keyboard_S">s</string>
+    <string name="keyboard_D">d</string>
+    <string name="keyboard_F">f</string>
+    <string name="keyboard_G">g</string>
+    <string name="keyboard_H">h</string>
+    <string name="keyboard_J">j</string>
+    <string name="keyboard_K">k</string>
+    <string name="keyboard_L">l</string>
+    <string name="keyboard_semicolon">;</string>
+    <string name="keyboard_colon">:</string>
+    <string name="keyboard_quote">\'</string>
+    <string name="keyboard_double_quote">\"</string>
+    <string name="keyboard_enter">\u23CE</string>
+    <string name="keyboard_left_shift">shift \u21e7</string>
+    <string name="keyboard_Z">z</string>
+    <string name="keyboard_X">x</string>
+    <string name="keyboard_C">c</string>
+    <string name="keyboard_V">v</string>
+    <string name="keyboard_B">b</string>
+    <string name="keyboard_N">n</string>
+    <string name="keyboard_M">m</string>
+    <string name="keyboard_comma">,</string>
+    <string name="keyboard_left_angle_bracket">\u3008</string>
+    <string name="keyboard_period">.</string>
+    <string name="keyboard_right_angle_bracket">\u3009</string>
+    <string name="keyboard_slash">/</string>
+    <string name="keyboard_question_mark">\?</string>
+    <string name="keyboard_right_shift">\u21e7 shift</string>
+    <string name="keyboard_control">ctrl</string>
+    <string name="keyboard_left_alt">alt \u2325</string>
+    <string name="keyboard_left_command">cmd \u2318</string>
+    <string name="keyboard_space"></string>
+    <string name="keyboard_right_command">\u2318 cmd</string>
+    <string name="keyboard_right_alt">\u2325 alt</string>
+    <string name="keyboard_left_arrow">\u2190</string>
+    <string name="keyboard_up_arrow">\u2191</string>
+    <string name="keyboard_right_arrow">\u2192</string>
+    <string name="keyboard_down_arrow">\u2193</string>
+    <string name="keyboard_arrows">\u2190\u2191\u2192</string>
+    <string name="keyboard_hide_arrows">X</string>
+
+    <string name="gamepad_dpad_left">\u2190</string>
+    <string name="gamepad_dpad_right">\u2192</string>
+    <string name="gamepad_dpad_up">\u2191</string>
+    <string name="gamepad_dpad_down">\u2193</string>
+    <string name="gamepad_X">X</string>
+    <string name="gamepad_Y">Y</string>
+    <string name="gamepad_A">A</string>
+    <string name="gamepad_B">B</string>
+    <string name="gamepad_left_arrow">\u25c5</string>
+    <string name="gamepad_right_arrow">\u25bb</string>
+    <string name="gamepad_L1">L1</string>
+    <string name="gamepad_L2">L2</string>
+    <string name="gamepad_R2">R2</string>
+    <string name="gamepad_R1">R1</string>
+
+    <string name="media_player_play_pause">\u25b6\u23f8</string>
 </resources>

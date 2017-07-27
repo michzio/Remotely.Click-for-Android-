@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gamepad_background">
+
+    <RelativeLayout
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="30dp"
+        android:id="@+id/gamepad_dpad_layout">
+
+        <Button
+            android:id="@+id/gamepad_dpad_left_down_btn"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_margin="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:minWidth="0dp"
+            android:text=""
+            android:background="@drawable/left_bottom_dpad_background"
+            style="@style/SelectableItemBackground" />
+
+        <Button
+            android:id="@+id/gamepad_dpad_right_down_btn"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_margin="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:minWidth="0dp"
+            android:text=""
+            android:background="@drawable/right_bottom_dpad_background"
+            style="@style/SelectableItemBackground" />
+
+        <Button
+            android:id="@+id/gamepad_dpad_left_up_btn"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_margin="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:minWidth="0dp"
+            android:text=""
+            android:background="@drawable/left_top_dpad_background"
+            style="@style/SelectableItemBackground" />
+
+        <Button
+            android:id="@+id/gamepad_dpad_right_up_btn"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_margin="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:minWidth="0dp"
+            android:text=""
+            android:background="@drawable/right_top_dpad_background"
+            style="@style/SelectableItemBackground" />
+
+        <Button
+            android:id="@+id/gamepad_dpad_left_btn"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:minWidth="0dp"
+            android:text="@string/gamepad_dpad_left"
+            android:textStyle="bold"
+            android:theme="@style/AppTheme.ButtonDark"
+            style="@style/SelectableItemBackground"
+            android:background="@color/colorPrimaryDark" />
+
+        <Button
+            android:id="@+id/gamepad_dpad_right_btn"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:minWidth="0dp"
+            android:text="@string/gamepad_dpad_right"
+            android:textStyle="bold"
+            android:theme="@style/AppTheme.ButtonDark"
+            style="@style/SelectableItemBackground"
+            android:background="@color/colorPrimaryDark"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true" />
+
+        <Button
+            android:id="@+id/gamepad_dpad_up_btn"
+            android:layout_width="30dp"
+            android:layout_height="60dp"
+            android:minWidth="0dp"
+            android:text="@string/gamepad_dpad_up"
+            android:textStyle="bold"
+            android:theme="@style/AppTheme.ButtonDark"
+            style="@style/SelectableItemBackground"
+            android:background="@color/colorPrimaryDark"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"  />
+
+        <Button
+            android:id="@+id/gamepad_dpad_down_btn"
+            android:layout_width="30dp"
+            android:layout_height="60dp"
+            android:minWidth="0dp"
+            android:text="@string/gamepad_dpad_down"
+            android:textStyle="bold"
+            android:theme="@style/AppTheme.ButtonDark"
+            style="@style/SelectableItemBackground"
+            android:background="@color/colorPrimaryDark"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true" />
+
+        <Button
+            android:id="@+id/gamepad_dpad_center_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:minWidth="0dp"
+            android:text=""
+            android:theme="@style/AppTheme.ButtonDark"
+            style="@style/SelectableItemBackground"
+            android:background="@color/colorPrimaryDark" />
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="8dp"
+        android:id="@+id/gamepad_buttons_layout">
+
+    <Button
+        android:id="@+id/gamepad_X_btn"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:text="@string/gamepad_X"
+        android:background="@drawable/round_button"
+        android:layout_gravity="left|center_vertical"
+        android:theme="@style/AppTheme.ButtonDark" />
+
+    <Button
+        android:id="@+id/gamepad_B_btn"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:text="@string/gamepad_B"
+        android:background="@drawable/round_button"
+        android:layout_gravity="right|center_vertical"
+        android:theme="@style/AppTheme.ButtonDark" />
+
+    <Button
+        android:id="@+id/gamepad_A_btn"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:text="@string/gamepad_A"
+        android:background="@drawable/round_button"
+        android:layout_gravity="bottom|center_horizontal"
+        android:theme="@style/AppTheme.ButtonDark" />
+
+    <Button
+        android:id="@+id/gamepad_Y_btn"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:text="@string/gamepad_Y"
+        android:background="@drawable/round_button"
+        android:layout_gravity="top|center_horizontal"
+        android:theme="@style/AppTheme.ButtonDark" />
+
+    </FrameLayout>
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/gampad_stick_background"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="80dp"
+        android:id="@+id/gamepad_left_stick"
+        app:layout_constraintEnd_toStartOf="@+id/gamepad_right_stick"
+        android:layout_marginEnd="0dp" />
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/gampad_stick_background"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/gamepad_left_stick"
+        android:layout_marginStart="0dp"
+        android:id="@+id/gamepad_right_stick"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="80dp" />
+
+    <Button
+        android:id="@+id/gamepad_left_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gamepad_left_arrow"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_in_center"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/gamepad_left_stick"
+        android:theme="@style/AppTheme.ButtonLight"
+        android:layout_alignParentTop="true" />
+
+    <Button
+        android:id="@+id/gamepad_right_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gamepad_right_arrow"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_in_center"
+        android:layout_marginStart="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/gamepad_left_stick"
+        android:theme="@style/AppTheme.ButtonLight" />
+
+    <Button
+        android:id="@+id/gamepad_L1_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gamepad_L1"
+        android:theme="@style/AppTheme.ButtonDark"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="60dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/gamepad_L2_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gamepad_L2"
+        android:theme="@style/AppTheme.ButtonDark"
+        app:layout_constraintStart_toEndOf="@+id/gamepad_L1_btn"
+        android:layout_marginStart="8dp"
+        app:layout_constraintTop_toTopOf="@+id/gamepad_L1_btn"
+        android:layout_marginTop="0dp" />
+
+    <Button
+        android:id="@+id/gamepad_R2_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gamepad_R2"
+        android:theme="@style/AppTheme.ButtonDark"
+        app:layout_constraintEnd_toStartOf="@+id/gamepad_R1_btn"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintTop_toTopOf="@+id/gamepad_R1_btn"
+        android:layout_marginTop="0dp" />
+
+    <Button
+        android:id="@+id/gamepad_R1_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gamepad_R1"
+        android:theme="@style/AppTheme.ButtonDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="60dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline_vertical_in_center"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+</android.support.constraint.ConstraintLayout>
