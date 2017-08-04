@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+
+    android:background="@drawable/media_player_background">
+
+    <ImageButton
+        android:id="@+id/browser_controls_new_tab_btn"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+
+        android:adjustViewBounds="true"
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:contentDescription="@string/browser_controls_new_tab"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+
+
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toStartOf="@+id/browser_controls_previous_tab_btn"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_new_tab_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/browser_controls_previous_tab_btn"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="16dp"
+        android:adjustViewBounds="true"
+
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:contentDescription="@string/browser_controls_previous_tab"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toStartOf="@+id/browser_controls_next_tab_btn"
+        app:layout_constraintStart_toEndOf="@+id/browser_controls_new_tab_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_previous_tab_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/browser_controls_next_tab_btn"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="16dp"
+        android:adjustViewBounds="true"
+
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:contentDescription="@string/browser_controls_next_tab"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toStartOf="@+id/browser_controls_close_tab_btn"
+        app:layout_constraintStart_toEndOf="@+id/browser_controls_previous_tab_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_next_tab_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/browser_controls_close_tab_btn"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
+
+        android:adjustViewBounds="true"
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:contentDescription="@string/browser_controls_close_tab"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/browser_controls_next_tab_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_close_tab_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/browser_controls_open_file_btn"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginTop="8dp"
+
+        android:adjustViewBounds="true"
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:contentDescription="@string/browser_controls_open_file"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/browser_controls_new_private_window_btn"
+        app:layout_constraintTop_toBottomOf="@+id/browser_controls_new_tab_btn"
+        app:srcCompat="@drawable/ic_folder_open_black_24dp"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"/>
+
+    <ImageButton
+        android:id="@+id/browser_controls_new_private_window_btn"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+
+        android:adjustViewBounds="true"
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:contentDescription="@string/browser_controls_new_private_window"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintStart_toEndOf="@+id/browser_controls_open_file_btn"
+        app:layout_constraintEnd_toStartOf="@+id/browser_controls_reopen_closed_tab_btn"
+        app:layout_constraintTop_toTopOf="@+id/browser_controls_open_file_btn"
+        app:srcCompat="@drawable/ic_private_window_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/browser_controls_reopen_closed_tab_btn"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+
+        android:adjustViewBounds="true"
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:contentDescription="@string/browser_controls_reopen_closed_tab"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintStart_toEndOf="@+id/browser_controls_new_private_window_btn"
+        app:layout_constraintEnd_toStartOf="@+id/browser_controls_close_window_btn"
+        app:layout_constraintTop_toTopOf="@+id/browser_controls_new_private_window_btn"
+        app:srcCompat="@drawable/ic_reopen_closed_tab_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/browser_controls_close_window_btn"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="8dp"
+
+        android:adjustViewBounds="true"
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:contentDescription="@string/browser_controls_close_window"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintStart_toEndOf="@+id/browser_controls_reopen_closed_tab_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/browser_controls_reopen_closed_tab_btn"
+        app:srcCompat="@drawable/ic_close_window_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/browser_controls_show_downloads_btn"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginTop="8dp"
+
+        android:adjustViewBounds="true"
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:contentDescription="@string/browser_controls_show_downloads"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/browser_controls_show_history_btn"
+        app:layout_constraintTop_toBottomOf="@+id/browser_controls_open_file_btn"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:srcCompat="@drawable/ic_file_download_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/browser_controls_show_history_btn"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginTop="0dp"
+
+        android:adjustViewBounds="true"
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:contentDescription="@string/browser_controls_show_history"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintStart_toEndOf="@+id/browser_controls_show_downloads_btn"
+        app:layout_constraintEnd_toStartOf="@+id/browser_controls_show_sidebar_btn"
+        app:layout_constraintTop_toTopOf="@+id/browser_controls_show_downloads_btn"
+        app:srcCompat="@drawable/ic_history_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/browser_controls_show_sidebar_btn"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginTop="0dp"
+
+        android:adjustViewBounds="true"
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:contentDescription="@string/browser_controls_show_sidebar"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintStart_toEndOf="@+id/browser_controls_show_history_btn"
+        app:layout_constraintEnd_toStartOf="@+id/browser_controls_show_page_source_btn"
+        app:layout_constraintTop_toTopOf="@+id/browser_controls_show_history_btn"
+        app:srcCompat="@drawable/ic_sidebar_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/browser_controls_show_page_source_btn"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="0dp"
+
+        android:adjustViewBounds="true"
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:contentDescription="@string/browser_controls_show_page_source"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintStart_toEndOf="@+id/browser_controls_show_sidebar_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/browser_controls_show_sidebar_btn"
+        app:srcCompat="@drawable/ic_source_code_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/browser_controls_home_page_btn"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="0dp"
+
+        android:adjustViewBounds="true"
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:contentDescription="@string/browser_controls_home_page"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/browser_controls_show_downloads_btn"
+        app:layout_constraintEnd_toStartOf="@+id/browser_controls_reload_page_btn"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:srcCompat="@drawable/ic_home_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/browser_controls_reload_page_btn"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+
+        android:adjustViewBounds="true"
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:contentDescription="@string/browser_controls_reload_page"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintStart_toEndOf="@+id/browser_controls_home_page_btn"
+        app:layout_constraintTop_toTopOf="@+id/browser_controls_home_page_btn"
+        app:layout_constraintEnd_toStartOf="@+id/browser_controls_bookmark_page_btn"
+        app:srcCompat="@drawable/ic_reload_page_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/browser_controls_bookmark_page_btn"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+
+        android:adjustViewBounds="true"
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:contentDescription="@string/browser_controls_bookmark_page"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintStart_toEndOf="@+id/browser_controls_reload_page_btn"
+        app:layout_constraintEnd_toStartOf="@+id/browser_controls_enter_fullscreen_btn"
+        app:layout_constraintTop_toTopOf="@+id/browser_controls_reload_page_btn"
+        app:srcCompat="@drawable/ic_bookmark_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/browser_controls_enter_fullscreen_btn"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="8dp"
+
+        android:adjustViewBounds="true"
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:contentDescription="@string/browser_controls_enter_fullscreen"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintStart_toEndOf="@+id/browser_controls_bookmark_page_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/browser_controls_bookmark_page_btn"
+        app:srcCompat="@drawable/ic_fullscreen_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/browser_controls_zoom_out_btn"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="0dp"
+
+        android:adjustViewBounds="true"
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:contentDescription="@string/browser_controls_zoom_out"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/browser_controls_home_page_btn"
+        app:layout_constraintEnd_toStartOf="@+id/browser_controls_zoom_actual_size_btn"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:srcCompat="@drawable/ic_zoom_out_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/browser_controls_zoom_actual_size_btn"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+
+        android:adjustViewBounds="true"
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:contentDescription="@string/browser_controls_zoom_actual_size"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintStart_toEndOf="@+id/browser_controls_zoom_out_btn"
+        app:layout_constraintTop_toTopOf="@+id/browser_controls_zoom_out_btn"
+        app:layout_constraintEnd_toStartOf="@+id/browser_controls_zoom_in_btn"
+        app:srcCompat="@drawable/ic_zoom_actual_size_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/browser_controls_zoom_in_btn"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+
+        android:adjustViewBounds="true"
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:contentDescription="@string/browser_controls_zoom_in"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintStart_toEndOf="@+id/browser_controls_zoom_actual_size_btn"
+        app:layout_constraintTop_toTopOf="@+id/browser_controls_zoom_actual_size_btn"
+        app:layout_constraintEnd_toStartOf="@+id/browser_controls_enter_location_btn"
+        app:srcCompat="@drawable/ic_zoom_in_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/browser_controls_enter_location_btn"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="8dp"
+
+        android:adjustViewBounds="true"
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:contentDescription="@string/browser_controls_enter_location"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintStart_toEndOf="@+id/browser_controls_zoom_in_btn"
+        app:layout_constraintTop_toTopOf="@+id/browser_controls_zoom_in_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_web_black_24dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/browser_controls_fab_action_keyboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_keyboard_white_24dp"
+        android:backgroundTint="@android:color/white"
+        android:foregroundTint="@color/colorPrimary"
+        android:tint="@color/colorPrimary"
+        app:elevation="4dp"
+        android:scaleX="1.25"
+        android:scaleY="1.25"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/browser_controls_fab_action_mouse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_mouse_black_24dp"
+        android:backgroundTint="@android:color/white"
+        android:foregroundTint="@color/colorPrimary"
+        android:tint="@color/colorPrimary"
+        app:elevation="4dp"
+        android:scaleX="1.25"
+        android:scaleY="1.25"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp" />
+
+</android.support.constraint.ConstraintLayout>

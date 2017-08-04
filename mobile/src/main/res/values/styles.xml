@@ -43,5 +43,4 @@
         <item name="android:theme">@style/SelectableItemTheme</item>
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
-
 </resources>

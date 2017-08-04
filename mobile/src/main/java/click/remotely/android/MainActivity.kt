@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar);
 
         nsdHelper = NSDHelper.with(this) //.addRegistrationListener().registerNetworkService("Remotely.Click", "_remotelyclick._tcp.", 2017)
-                .addDisoveryListener("", "_remotely_click._tcp.").addResolveListener().discoverNetworkServices("_remotely_click._tcp.")
+                .addDefaultDisoveryListener().addDefaultResolveListener().discoverNetworkServices("_remotely_click._tcp.")
 
         // Example of a call to a native method
         val tv = findViewById(R.id.sample_text) as TextView

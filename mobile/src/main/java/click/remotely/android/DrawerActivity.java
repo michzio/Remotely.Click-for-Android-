@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -58,10 +59,13 @@ public class DrawerActivity extends AppCompatActivity {
 
         mNavigationView = (NavigationView) findViewById(R.id.start_nav_view);
         mNavigationView.setNavigationItemSelectedListener(navigationItemSelectedListener);
+
+        getSupportFragmentManager().addOnBackStackChangedListener(backStackChangedListener);
     }
 
     @Override
     public void onBackPressed() {
+
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -120,55 +124,67 @@ public class DrawerActivity extends AppCompatActivity {
         int orientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR;
 
         Fragment fragment = null;
+        String fragmentName = null;
 
         switch(item.getItemId()) {
             case R.id.nav_touchpad:
                 Log.d(TAG, "Navigation Menu - touchpad item selected");
                 fragment = new TouchpadFragment();
+                fragmentName = getString(R.string.action_touchpad);
                 break;
             case R.id.nav_mouse:
                 Log.d(TAG, "Navigation Menu - mouse item selected");
                 fragment = new MouseFragment();
                 orientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT;
+                fragmentName = getString(R.string.action_mouse);
                 break;
             case R.id.nav_keyboard:
                 Log.d(TAG, "Navigation Menu - keyboard item selected");
                 fragment = new KeyboardFragment();
                 orientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
+                fragmentName = getString(R.string.action_keyboard);
                 break;
             case R.id.nav_numpad:
                 Log.d(TAG, "Navigation Menu - numpad item selected");
                 fragment = new NumpadFragment();
+                fragmentName = getString(R.string.action_numpad);
                 break;
             case R.id.nav_gamepad:
                 Log.d(TAG, "Navigation Menu - gamepad item selected");
                 fragment = new GamepadFragment();
                 orientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
+                fragmentName = getString(R.string.action_gamepad);
                 break;
             case R.id.nav_touchscreen:
                 Log.d(TAG, "Navigation Menu - touchscreen item selected");
                 fragment = new TouchscreenFragment();
                 orientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
+                fragmentName = getString(R.string.action_touchscreen);
                 break;
             case R.id.nav_media_player:
                 Log.d(TAG, "Navigation Menu - media player item selected");
                 fragment = new MediaPlayerControlsFragment();
+                fragmentName = getString(R.string.action_media_player);
                 break;
             case R.id.nav_slideshow:
                 Log.d(TAG, "Navigation Menu - slide show item selected");
                 fragment = new SlideShowControlsFragment();
+                fragmentName = getString(R.string.action_slide_show);
                 break;
             case R.id.nav_browser:
                 Log.d(TAG, "Navigation Menu - browser item selected");
                 fragment = new BrowserControlsFragment();
+                fragmentName = getString(R.string.action_browser);
                 break;
             case R.id.nav_power_controls:
                 Log.d(TAG, "Navigation Menu - power controls item selected");
                 fragment = new PowerControlsFragment();
+                fragmentName = getString(R.string.action_power_controls);
                 break;
             case R.id.nav_shortcuts:
                 Log.d(TAG, "Navigation Menu - shortcuts item selected");
                 fragment = new ShortcutsFragment();
+                fragmentName = getString(R.string.action_shortcuts);
                 break;
             default:
                 Log.d(TAG, "Navigation Menu - item id: " + item.getItemId());
@@ -177,7 +193,10 @@ public class DrawerActivity extends AppCompatActivity {
 
         if(fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.content_frame, fragment);
+            fragmentTransaction.addToBackStack(fragmentName);
+            fragmentTransaction.commit();
 
             mNavigationView.setCheckedItem(item.getItemId());
             mDrawerLayout.closeDrawer(Gravity.LEFT);
@@ -190,7 +209,11 @@ public class DrawerActivity extends AppCompatActivity {
 
     private void startConsoleFragment() {
         Fragment fragment = new ConsoleFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+        FragmentManager fragmetManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmetManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content_frame, fragment);
+        fragmentTransaction.addToBackStack("Console");
+        fragmentTransaction.commit();
         navigationViewUncheckItems();
 
         setTitle(R.string.action_console);
@@ -202,4 +225,18 @@ public class DrawerActivity extends AppCompatActivity {
             mNavigationView.getMenu().getItem(i).setChecked(false);
         }
     }
+
+    FragmentManager.OnBackStackChangedListener backStackChangedListener = new FragmentManager.OnBackStackChangedListener() {
+        @Override
+        public void onBackStackChanged() {
+
+            int lastBackStackEntryCount = getSupportFragmentManager().getBackStackEntryCount()-1;
+            if(lastBackStackEntryCount >= 0) {
+                FragmentManager.BackStackEntry lastBackStackEntry = getSupportFragmentManager().getBackStackEntryAt(lastBackStackEntryCount);
+                setTitle(lastBackStackEntry.getName());
+            } else {
+                setTitle(getString(R.string.app_name));
+            }
+        }
+    };
 }

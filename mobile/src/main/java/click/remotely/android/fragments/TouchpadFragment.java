@@ -35,7 +35,7 @@ public class TouchpadFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mFloatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.fab_action_keyboard);
+        mFloatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.touchpad_fab_action_keyboard);
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

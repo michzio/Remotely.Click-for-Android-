@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="click.remotely.android.fragments.TouchpadFragment">
+    tools:context="click.remotely.android.fragments.TouchpadFragment"
+    android:background="@drawable/media_player_background">
 
     <click.remotely.inputs.TouchpadView
         android:id="@+id/touchpadView"
@@ -22,7 +23,7 @@
         app:layout_constraintBottom_toTopOf="@+id/touchpad_buttons_layout"
         app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/touchpad_view_border"
-        app:paintColor="@color/colorPrimary"
+        app:paintColor="@android:color/white"
         app:strokeWidth="30" />
 
     <LinearLayout
@@ -41,24 +42,31 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@drawable/ic_mouse_left_black_24dp" />
+            android:drawableTop="@drawable/ic_mouse_left_black_24dp"
+            android:theme="@style/AppTheme.ButtonLight" />
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@drawable/ic_mouse_right_black_24dp"/>
+            android:drawableTop="@drawable/ic_mouse_right_black_24dp"
+            android:theme="@style/AppTheme.ButtonLight" />
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_action_keyboard"
+        android:id="@+id/touchpad_fab_action_keyboard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_keyboard_white_24dp"
+        android:backgroundTint="@android:color/white"
+        android:foregroundTint="@color/colorPrimary"
+        android:tint="@color/colorPrimary"
+        android:scaleX="1.25"
+        android:scaleY="1.25"
         app:elevation="4dp"
         app:layout_constraintBottom_toTopOf="@+id/touchpad_buttons_layout"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"/>
+        android:layout_marginBottom="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -1,5 +1,6 @@
 package click.remotely.common;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 /**

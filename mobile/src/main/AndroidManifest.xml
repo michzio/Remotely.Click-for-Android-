@@ -40,6 +40,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="click.remotely.android.DrawerActivity" />
         </activity>
+        <provider
+            android:authorities="click.remotely.provider.UserDeviceInfoProvider"
+            android:name="click.remotely.database.UserDeviceInfoProvider"
+            android:exported="false">
+        </provider>
     </application>
 
 </manifest>

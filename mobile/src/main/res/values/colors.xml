@@ -11,4 +11,6 @@
     <color name="colorBackgroundLight">#FFFFFFFF</color>
     <color name="colorDimBackground">#CC000000</color>
     <color name="rippleColor">#CECECE</color>
+    <color name="colorPowerRed">@android:color/holo_red_dark</color>
+    <color name="colorPowerGreen">@android:color/holo_green_dark</color>
 </resources>

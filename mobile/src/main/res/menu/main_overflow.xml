@@ -5,7 +5,7 @@
         android:id="@+id/action_remote_devices"
         android:orderInCategory="50"
         android:title="@string/action_remote_devices"
-        android:icon="@drawable/ic_remote_devices_black_24dp"
+        android:icon="@drawable/ic_remote_devices_white_24dp"
         app:showAsAction="always"
         />
     <item

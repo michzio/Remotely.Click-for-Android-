@@ -14,15 +14,14 @@ import click.remotely.common.SessionHandler;
 public class RemotelyClickApplication extends Application {
 
     private static RemotelyClickApplication sharedInstance;
-
-    private SessionHandler sessionHandler;
+    private SessionHandler mSessionHandler;
 
     public static RemotelyClickApplication getSharedInstance() {
         return sharedInstance;
     }
 
     public SessionHandler getSessionHandler() {
-        return sessionHandler;
+        return mSessionHandler;
     }
 
     @Override
@@ -34,8 +33,8 @@ public class RemotelyClickApplication extends Application {
 
     protected void init() {
         // do all initialization of shared application instance here
-        sessionHandler = new SessionHandler( getSharedPreferences("APPLICATION_PREFERENCES", Context.MODE_PRIVATE) );
-        if( sessionHandler.isApplicationFirstRun() ) {
+        mSessionHandler = new SessionHandler( getSharedPreferences("APPLICATION_PREFERENCES", Context.MODE_PRIVATE) );
+        if( mSessionHandler.isApplicationFirstRun() ) {
             Toast.makeText(this, "Application is run first time!", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, "Application is run again.", Toast.LENGTH_LONG).show();

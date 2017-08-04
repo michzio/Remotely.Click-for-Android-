@@ -202,4 +202,54 @@
     <string name="gamepad_R1">R1</string>
 
     <string name="media_player_play_pause">\u25b6\u23f8</string>
+
+    <string name="browser_controls_new_tab">Browser controls - New Tab</string>
+    <string name="browser_controls_previous_tab">Browser controls - Previous Tab</string>
+    <string name="browser_controls_next_tab">Browser controls - Next Tab</string>
+    <string name="browser_controls_close_tab">Browser controls - Close Tab</string>
+    <string name="browser_controls_open_file">Browser controls - Open File</string>
+    <string name="browser_controls_new_private_window">Browser controls - New Private Window</string>
+    <string name="browser_controls_reopen_closed_tab">Browser controls - Reopen Closed Tab</string>
+    <string name="browser_controls_close_window">Browser controls - Close Window</string>
+    <string name="browser_controls_show_downloads">Browser controls - Show Downloads</string>
+    <string name="browser_controls_show_history">Browser controls - Show History</string>
+    <string name="browser_controls_show_sidebar">Browser controls - Show Sidebar</string>
+    <string name="browser_controls_show_page_source">Browser controls - Show Page Source</string>
+    <string name="browser_controls_home_page">Browser controls - Home Page</string>
+    <string name="browser_controls_reload_page">Browser controls - Reload Page</string>
+    <string name="browser_controls_bookmark_page">Browser controls - Bookmark Page</string>
+    <string name="browser_controls_enter_fullscreen">Browser controls - Enter Fullscreen</string>
+    <string name="browser_controls_zoom_out">Browser controls - Zoom Out</string>
+    <string name="browser_controls_zoom_in">Browser controls - Zoom In</string>
+    <string name="browser_controls_zoom_actual_size">Browser controls - Zoom Actual Size</string>
+    <string name="browser_controls_enter_location">Browser controls - Enter Location</string>
+
+    <string name="shut_down">Shut down</string>
+    <string name="restart">Restart</string>
+    <string name="sleep">Sleep</string>
+    <string name="logout">Log out</string>
+
+    <string name="shortcuts_select_all">Select All</string>
+    <string name="shortcuts_cut">Cut</string>
+    <string name="shortcuts_copy">Copy</string>
+    <string name="shortcuts_paste">Paste</string>
+    <string name="shortcuts_find">Find</string>
+    <string name="shortcuts_save">Save</string>
+    <string name="shortcuts_print">Print</string>
+    <string name="shortcuts_open_file">Open File</string>
+    <string name="shortcuts_minimize_window">Minimize Window</string>
+    <string name="shortcuts_close_window">Close Window</string>
+    <string name="shortcuts_new_window">New Window</string>
+    <string name="shortcuts_switch_apps">Switch Apps</string>
+    <string name="shortcuts_undo">Undo</string>
+    <string name="shortcuts_redo">Redo</string>
+    <string name="shortcuts_show_desktop">Show Desktop</string>
+    <string name="shortcuts_left_desktop">Left Desktop</string>
+    <string name="shortcuts_right_desktop">Right Desktop</string>
+    <string name="shortcuts_system_search">System Search</string>
+    <string name="shortcuts_force_quite">Force Quite</string>
+
+    <string name="create_user_device_title">Create User Device</string>
+    <string name="dialog_user_device_name">Device Name</string>
+
 </resources>
