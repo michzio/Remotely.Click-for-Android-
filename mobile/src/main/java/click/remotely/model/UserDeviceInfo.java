@@ -4,50 +4,26 @@ package click.remotely.model;
  * Created by michzio on 02/08/2017.
  */
 
-public class UserDeviceInfo {
+public class UserDeviceInfo extends DeviceInfo {
 
     private Integer deviceId;
-    private String deviceName;
-    private String host;
-    private Integer portNumber;
+
+    /**
+     * Constructor used to create new UserDevice object
+     * before inserting it to DB and generating auto incremented ID.
+     **/
+    public UserDeviceInfo(String deviceName, String host, Integer portNumber) {
+        super(deviceName, host, portNumber);
+        this.type = Type.USER_DEFINED;
+    }
 
     public UserDeviceInfo(Integer deviceId, String deviceName, String host, Integer portNumber) {
+        this(deviceName, host, portNumber);
         this.deviceId = deviceId;
-        this.deviceName = deviceName;
-        this.host = host;
-        this.portNumber = portNumber;
+
     }
 
     public Integer getDeviceId() { return deviceId; }
 
     public void setDeviceId(Integer deviceId) { this.deviceId = deviceId; }
-
-    public String getDeviceName() {
-        return deviceName;
-    }
-
-    public void setDeviceName(String deviceName) {
-        this.deviceName = deviceName;
-    }
-
-    public String getHost() {
-        return host;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    public Integer getPortNumber() {
-        return portNumber;
-    }
-
-    public void setPortNumber(Integer portNumber) {
-        this.portNumber = portNumber;
-    }
-
-    @Override
-    public String toString() {
-        return deviceName;
-    }
 }

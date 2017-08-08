@@ -4,7 +4,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.net.nsd.NsdServiceInfo;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -14,18 +16,23 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import click.remotely.android.dialog.UserDeviceDialogFragment;
 import click.remotely.database.UserDeviceInfoProvider;
+import click.remotely.model.DeviceInfo;
+import click.remotely.model.RemoteDeviceInfo;
 import click.remotely.model.RemoteDevicesRecyclerAdapter;
 import click.remotely.model.UserDeviceInfo;
 import click.remotely.networking.NSDHelper;
 
 public class RemoteDevicesActivity extends AppCompatActivity {
 
+    private static final String TAG = RemoteDevicesActivity.class.getName();
     private static final int USER_DEVICES_LOADER = 0x02;
 
     public static final String SERVICE_NAME = "Remotely.Click";
@@ -40,10 +47,13 @@ public class RemoteDevicesActivity extends AppCompatActivity {
     private DividerItemDecoration mDividerItemDecoration;
 
     private FloatingActionButton mFloatingActionButton;
+    private Boolean mIsLargeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.d(TAG, "onCreate method called.");
 
         // configure activity's view
         setContentView(R.layout.activity_remote_devices);
@@ -70,6 +80,7 @@ public class RemoteDevicesActivity extends AppCompatActivity {
 
     private void configureFloatingActionButton() {
 
+        mIsLargeLayout = getResources().getBoolean(R.bool.large_layout);
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.remote_devices_fab_add_custom_device);
         mFloatingActionButton.setOnClickListener(v -> showModalUserDeviceDialogFragment());
     }
@@ -100,7 +111,7 @@ public class RemoteDevicesActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mRecyclerLayoutManager);
-        mRecyclerAdapter = new RemoteDevicesRecyclerAdapter(mNsdHelper.getNetworkServicesMap(), mUserDevicesMap);
+        mRecyclerAdapter = new RemoteDevicesRecyclerAdapter();
         mRecyclerView.setAdapter(mRecyclerAdapter);
         mDividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
         mRecyclerView.addItemDecoration(mDividerItemDecoration);
@@ -109,6 +120,8 @@ public class RemoteDevicesActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        Log.d(TAG, "onResume method called.");
 
         if(mNsdHelper != null) {
             mNsdHelper.discoverNetworkServices(SERVICE_TYPE);
@@ -119,19 +132,23 @@ public class RemoteDevicesActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
 
+        Log.d(TAG, "onPause method called");
+
         if(mNsdHelper != null) {
             mNsdHelper.tearDown();
         }
-        getSupportLoaderManager().destroyLoader(USER_DEVICES_LOADER);
+        //getSupportLoaderManager().destroyLoader(USER_DEVICES_LOADER);
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
 
+        Log.d(TAG, "onDestroy method called");
         if(mNsdHelper != null) {
             mNsdHelper.tearDown();
         }
+        getSupportLoaderManager().destroyLoader(USER_DEVICES_LOADER);
         super.onDestroy();
     }
 
@@ -142,19 +159,26 @@ public class RemoteDevicesActivity extends AppCompatActivity {
         @Override
         public void onNetworkServiceAdded(Map<String, NsdServiceInfo> networkServicesMap, String serviceName, NsdServiceInfo serviceInfo) {
 
-            mRecyclerAdapter.notifyRemoteDeviceAdded(serviceName);
+            Log.d(TAG,  "Remote device " + serviceName + " added.");
+            // wrap NsdServiceInfo object into RemoteDeviceInfo object
+            DeviceInfo deviceInfo = new RemoteDeviceInfo(serviceInfo);
+            mRecyclerAdapter.add(deviceInfo);
         }
 
         @Override
         public void onNetworkServiceRemoved(Map<String, NsdServiceInfo> networkServicesMap, String serviceName, NsdServiceInfo oldServiceInfo) {
 
-            mRecyclerAdapter.notifyRemoteDeviceRemoved(serviceName);
+            Log.d(TAG,  "Remote device " + serviceName + " removed.");
+            // wrap NsdServiceInfo object into RemoteDeviceInfo object
+            DeviceInfo deviceInfo = new RemoteDeviceInfo(oldServiceInfo);
+            mRecyclerAdapter.remove(deviceInfo);
         }
 
         @Override
         public void onNetworkServicesCleared(Map<String, NsdServiceInfo> networkServicesMap) {
 
-            mRecyclerAdapter.notifyRemoteDevicesCleared();
+            Log.d(TAG,  "Remote devices cleared.");
+            mRecyclerAdapter.clear();
         }
 
         @Override
@@ -209,11 +233,6 @@ public class RemoteDevicesActivity extends AppCompatActivity {
         @Override
         public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
 
-            if(mUserDevicesMap.size() > 0) {
-                mUserDevicesMap.clear();
-                mRecyclerAdapter.notifyUserDevicesCleared();
-            }
-
             if(cursor.getCount() > 0) {
 
                 while (cursor.moveToNext()) {
@@ -228,10 +247,9 @@ public class RemoteDevicesActivity extends AppCompatActivity {
                     Integer userDevicePortNumber = cursor.getInt(cursor.getColumnIndexOrThrow(
                             UserDeviceInfoProvider.UserDeviceInfoTable.COLUMN_PORT_NUMBER));
 
-                    mUserDevicesMap.put(userDeviceName,
-                            new UserDeviceInfo(userDeviceId, userDeviceName, userDeviceHost, userDevicePortNumber));
+                    DeviceInfo deviceInfo =  new UserDeviceInfo(userDeviceId, userDeviceName, userDeviceHost, userDevicePortNumber);
 
-                    mRecyclerAdapter.notifyUserDeviceAdded(userDeviceName);
+                    mRecyclerAdapter.add(deviceInfo);
                 }
             }
         }
@@ -239,14 +257,79 @@ public class RemoteDevicesActivity extends AppCompatActivity {
         @Override
         public void onLoaderReset(Loader<Cursor> loader) {
 
+            if(loader.getId() == USER_DEVICES_LOADER) {
+
+            }
+
         }
     };
 
+    private static final String USER_DEVICE_DIALOG_FRAGMENT_TAG = "USER_DEVICE_DIALOG_FRAGMENT";
 
     private void showModalUserDeviceDialogFragment() {
 
         // close existing dialog fragments if any
         FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentByTag(USER_DEVICE_DIALOG_FRAGMENT_TAG);
+        if(fragment != null) {
+            fragmentManager.beginTransaction().remove(fragment).commit();
+        }
+
+        UserDeviceDialogFragment userDeviceDialogFragment = UserDeviceDialogFragment.newInstance(getString(R.string.dialog_user_device_title));
+        userDeviceDialogFragment.setOnDialogEventListener(userDeviceDialogListener);
+
+        if(mIsLargeLayout) {
+            // The device is using a large layout, so show the fragment as a dialog
+            userDeviceDialogFragment.show(fragmentManager, USER_DEVICE_DIALOG_FRAGMENT_TAG);
+        } else {
+            // The device is smaller, so show the fragment fullscreen
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            // Transition animation
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            // To make it fullscreen, use the 'content' root view as the container
+            // for the fragment, which is always the root view for the activity
+            fragmentTransaction.add(android.R.id.content, userDeviceDialogFragment, USER_DEVICE_DIALOG_FRAGMENT_TAG)
+                               .addToBackStack(USER_DEVICE_DIALOG_FRAGMENT_TAG)
+                               .commit();
+        }
+    }
+
+
+    UserDeviceDialogFragment.OnDialogEventListener userDeviceDialogListener = new UserDeviceDialogFragment.OnDialogEventListener() {
+        @Override
+        public void onDialogClose() {
+            Log.d(TAG, "User Device Dialog closed!");
+            handleUserDeviceDialogClose();
+        }
+    };
+
+    @Override
+    public void onBackPressed() {
+
+        int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+
+        if(backStackEntryCount > 0) {
+            FragmentManager.BackStackEntry backStackEntry =
+                    getSupportFragmentManager().getBackStackEntryAt(backStackEntryCount - 1);
+
+            if(backStackEntry.getName().equals(USER_DEVICE_DIALOG_FRAGMENT_TAG)) {
+                Log.d(TAG, "onBackPress found UserDeviceDialogFragment back stack entry.");
+                handleUserDeviceDialogClose();
+            }
+        }
+
+        /*
+            if(getSupportFragmentManager()
+                    .findFragmentByTag(USER_DEVICE_DIALOG_FRAGMENT_TAG) != null) {
+                Log.d(TAG, "onBackPress found UserDeviceDialogFragment fragment.");
+            }
+         */
+        super.onBackPressed();
+    }
+
+    private void handleUserDeviceDialogClose() {
+
+        //getSupportLoaderManager().restartLoader(USER_DEVICES_LOADER, null, userDevicesLoader);
     }
 }
 

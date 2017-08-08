@@ -23,11 +23,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true">
+
         <TextView
             android:id="@+id/dialog_user_device_form_submission_errors"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="12dp"
             android:textColor="@color/colorPowerRed"
             android:background="@color/colorLightGray"
             android:text="@string/dialog_user_device_form_submission_errors"
@@ -35,7 +36,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/dialog_user_device_name_text_view"
@@ -43,12 +44,13 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="4dp"
             android:text="@string/dialog_user_device_name"
-            android:textSize="20sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dialog_user_device_form_submission_errors" />
+
         <android.support.design.widget.TextInputLayout
             android:id="@+id/dialog_user_device_name_text_input_layout"
             app:errorEnabled="true"
@@ -60,7 +62,7 @@
             app:layout_constraintTop_toBottomOf="@id/dialog_user_device_name_text_view"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="0dp">
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/dialog_user_device_name_edit_text"
                 android:hint="@string/dialog_user_device_name_hint"
@@ -71,16 +73,15 @@
                 android:imeOptions="actionNext"
                 android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
-
         <TextView
             android:id="@+id/dialog_user_device_host_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="0dp"
             android:text="@string/dialog_user_device_host"
-            android:textSize="20sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dialog_user_device_name_text_input_layout" />
@@ -92,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dialog_user_device_host_text_view">
@@ -103,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:imeOptions="actionNext"
-                android:singleLine="true"/>
+                android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
         <TextView
             android:id="@+id/dialog_user_device_port_number_text_view"
@@ -111,9 +112,9 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="0dp"
             android:text="@string/dialog_user_device_port_number"
-            android:textSize="20sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dialog_user_device_host_text_input_layout" />
@@ -125,7 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dialog_user_device_port_number_text_view">
@@ -136,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:imeOptions="actionDone"
-                android:singleLine="true"/>
+                android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
     </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>

@@ -177,7 +177,6 @@ public class NSDHelper {
                         mapChangedListener.onNetworkServiceAdded(mNetworkServicesMap, serviceInfo.getServiceName(), serviceInfo);
                         mapChangedListener.onNetworkServicesMapChanged(mNetworkServicesMap);
                     }
-
                 }
             }
 

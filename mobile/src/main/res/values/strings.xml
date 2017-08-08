@@ -249,7 +249,22 @@
     <string name="shortcuts_system_search">System Search</string>
     <string name="shortcuts_force_quite">Force Quite</string>
 
-    <string name="create_user_device_title">Create User Device</string>
+    <string name="dialog_user_device_title">New User Device</string>
+    <string name="dialog_user_device_action_save">Add</string>
     <string name="dialog_user_device_name">Device Name</string>
+    <string name="dialog_user_device_name_hint">My Computer</string>
+    <string name="dialog_user_device_name_error_empty">Device name cannot be empty!</string>
+    <string name="dialog_user_device_name_error_duplicate">Duplicate! Device name has been found in database.</string>
+    <string name="dialog_user_device_host">Host Address</string>
+    <string name="dialog_user_device_host_hint">192.168.8.100</string>
+    <string name="dialog_user_device_host_error_empty">Host address cannot be empty!</string>
+    <string name="dialog_user_device_host_error">Incorrect IP address format!</string>
+    <string name="dialog_user_device_port_number">Port Number</string>
+    <string name="dialog_user_device_port_number_hint">50505</string>
+    <string name="dialog_user_device_port_number_error_empty">Port Number cannot be empty!</string>
+    <string name="dialog_user_device_port_number_error">Incorrect Port Number, should be in range 1025 to 65535!</string>
+    <string name="dialog_user_device_form_submission_errors">Correct errors in the following input fields:</string>
+
+
 
 </resources>

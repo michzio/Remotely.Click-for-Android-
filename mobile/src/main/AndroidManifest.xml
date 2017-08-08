@@ -30,7 +30,9 @@
         <activity
             android:name=".RemoteDevicesActivity"
             android:label="@string/title_activity_remote_devices"
-            />
+            android:parentActivityName=".MainDrawerActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"

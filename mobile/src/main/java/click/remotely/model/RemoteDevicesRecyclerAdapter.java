@@ -6,6 +6,7 @@ import android.net.nsd.NsdServiceInfo;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.UiThread;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.text.style.IconMarginSpan;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -29,13 +31,8 @@ import click.remotely.android.R;
 
 public class RemoteDevicesRecyclerAdapter extends RecyclerView.Adapter<RemoteDevicesRecyclerAdapter.ViewHolder> {
 
-    // bonjour (NSD) found devices
-    private Map<String, NsdServiceInfo> mRemoteDevicesMap;
-    private List<String> mRemoteDeviceNamesList;
+    private SortedList<DeviceInfo> mDataSet;
 
-    // user created custom devices
-    private Map<String, UserDeviceInfo> mUserDevicesMap;
-    private List<String> mUserDeviceNamesList;
 
     // References to the views for each data item
     // Complex data items may need more than one view per item
@@ -55,79 +52,9 @@ public class RemoteDevicesRecyclerAdapter extends RecyclerView.Adapter<RemoteDev
     }
 
     // Provide suitable constructor depending on the kind of data set
-    public RemoteDevicesRecyclerAdapter(Map<String, NsdServiceInfo> remoteDevicesMap, Map<String, UserDeviceInfo> userDevicesMap) {
+    public RemoteDevicesRecyclerAdapter() {
 
-        this.mRemoteDevicesMap = remoteDevicesMap;
-        this.mRemoteDeviceNamesList = new ArrayList<>(remoteDevicesMap.keySet());
-
-        this.mUserDevicesMap = userDevicesMap;
-        this.mUserDeviceNamesList = new ArrayList<>(userDevicesMap.keySet());
-    }
-
-    public synchronized void notifyRemoteDeviceAdded(String deviceName) {
-
-        if(!mRemoteDeviceNamesList.contains(deviceName)) {
-            mRemoteDeviceNamesList.add(deviceName);
-            int remoteDevicePosition = mRemoteDeviceNamesList.size()-1;
-            notifyItemInserted(remoteDevicePosition);
-        } else {
-            int remoteDevicePosition = mRemoteDeviceNamesList.indexOf(deviceName);
-            notifyItemChanged(remoteDevicePosition);
-        }
-    }
-
-    public synchronized void notifyRemoteDeviceRemoved(String deviceName) {
-
-        int remoteDevicePosition = mRemoteDeviceNamesList.indexOf(deviceName);
-        if(remoteDevicePosition >=0) {
-            mRemoteDeviceNamesList.remove(remoteDevicePosition);
-            notifyItemRemoved(remoteDevicePosition);
-        }
-    }
-
-    public synchronized void notifyRemoteDevicesCleared() {
-
-        mRemoteDeviceNamesList.clear();
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                notifyDataSetChanged();
-            }
-        });
-    }
-
-    public synchronized void notifyUserDeviceAdded(String deviceName) {
-
-        if(!mUserDeviceNamesList.contains(deviceName)) {
-            mUserDeviceNamesList.add(deviceName);
-            int devicePosition = mRemoteDeviceNamesList.size() + mUserDeviceNamesList.size() -1;
-            notifyItemInserted(devicePosition);
-        } else {
-            int userDevicePosition = mUserDeviceNamesList.indexOf(deviceName);
-            int devicePosition = mRemoteDeviceNamesList.size() + userDevicePosition;
-            notifyItemChanged(devicePosition);
-        }
-    }
-
-    public synchronized void notifyUserDeviceRemoved(String deviceName) {
-
-        int userDevicePosition = mUserDeviceNamesList.indexOf(deviceName);
-        if(userDevicePosition >=0) {
-            mUserDeviceNamesList.remove(userDevicePosition);
-            int devicePosition = mRemoteDeviceNamesList.size() + userDevicePosition;
-            notifyItemRemoved(devicePosition);
-        }
-    }
-
-    public synchronized void notifyUserDevicesCleared() {
-
-        mUserDeviceNamesList.clear();
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                notifyDataSetChanged();
-            }
-        });
+        mDataSet = new SortedList<DeviceInfo>(DeviceInfo.class, sortedListCallback);
     }
 
     // Create new view (view holder) (using layout inflater)
@@ -147,27 +74,106 @@ public class RemoteDevicesRecyclerAdapter extends RecyclerView.Adapter<RemoteDev
     @TargetApi(16)
     public void onBindViewHolder(RemoteDevicesRecyclerAdapter.ViewHolder viewHolder, int position) {
 
-        if(position < mRemoteDeviceNamesList.size()) {
+        DeviceInfo deviceInfo = mDataSet.get(position);
+        viewHolder.remoteDeviceTextView.setText(deviceInfo.getDeviceName());
+
+        if(deviceInfo.getType() == DeviceInfo.Type.REMOTELY_FOUND) {
             // remote devices (bonjour detected)
-            final String deviceName = mRemoteDeviceNamesList.get(position);
-            final NsdServiceInfo deviceInfo = mRemoteDevicesMap.get(deviceName);
-
-            viewHolder.remoteDeviceTextView.setText(deviceInfo.getServiceName());
             viewHolder.remoteDeviceImageView.setImageResource(R.drawable.ic_remote_devices_white_24dp);
-        } else {
+        } else if(deviceInfo.getType() == DeviceInfo.Type.USER_DEFINED) {
             // user defined devices
-            position = position - mRemoteDeviceNamesList.size();
-            final String deviceName = mUserDeviceNamesList.get(position);
-            final UserDeviceInfo deviceInfo = mUserDevicesMap.get(deviceName);
-
-            viewHolder.remoteDeviceTextView.setText(deviceInfo.getDeviceName());
             viewHolder.remoteDeviceImageView.setImageResource(R.drawable.ic_user_devices_black_24dp);
         }
     }
 
     @Override
     public int getItemCount() {
-        return mRemoteDeviceNamesList.size() + mUserDeviceNamesList.size();
+        return mDataSet.size();
     }
 
+    // Adapter Helper methods
+    public DeviceInfo get(int position) {
+        return mDataSet.get(position);
+    }
+
+    public int add(DeviceInfo item) {
+        return mDataSet.add(item);
+    }
+
+    public int indexOF(DeviceInfo item) {
+        return mDataSet.indexOf(item);
+    }
+
+    public void updateItemAt(int position, DeviceInfo item) {
+        mDataSet.updateItemAt(position, item);
+    }
+
+    public void addAll(List<DeviceInfo> items) {
+
+        mDataSet.beginBatchedUpdates();
+        for(DeviceInfo item : items) {
+            mDataSet.add(item);
+        }
+        mDataSet.endBatchedUpdates();
+    }
+
+    public void addAll(DeviceInfo[] items) {
+        addAll(Arrays.asList(items));
+    }
+
+    public boolean remove(DeviceInfo item) {
+        return mDataSet.remove(item);
+    }
+
+    public DeviceInfo removeItemAt(int position) {
+        return mDataSet.removeItemAt(position);
+    }
+
+    public void clear() {
+        mDataSet.beginBatchedUpdates();
+        // remove items at end, to avoid unnecessary array shifting
+        while(mDataSet.size() > 0) {
+            mDataSet.removeItemAt(mDataSet.size() -1);
+        }
+        mDataSet.endBatchedUpdates();
+    }
+
+    // Implementation of mDataSet SortedList callback SortedList.Callback<DeviceInfo>
+    SortedList.Callback<DeviceInfo> sortedListCallback = new SortedList.Callback<DeviceInfo>() {
+
+        @Override
+        public int compare(DeviceInfo o1, DeviceInfo o2) {
+            return o1.getDeviceName().compareTo(o2.getDeviceName());
+        }
+
+        @Override
+        public void onInserted(int position, int count) {
+            notifyItemRangeInserted(position, count);
+        }
+
+        @Override
+        public void onRemoved(int position, int count) {
+            notifyItemRangeRemoved(position, count);
+        }
+
+        @Override
+        public void onMoved(int fromPosition, int toPosition) {
+            notifyItemMoved(fromPosition, toPosition);
+        }
+
+        @Override
+        public void onChanged(int position, int count) {
+            notifyItemRangeChanged(position, count);
+        }
+
+        @Override
+        public boolean areContentsTheSame(DeviceInfo oldItem, DeviceInfo newItem) {
+            return oldItem.toString().equals(newItem.toString());
+        }
+
+        @Override
+        public boolean areItemsTheSame(DeviceInfo item1, DeviceInfo item2) {
+            return item1.equals(item2);
+        }
+    };
 }
