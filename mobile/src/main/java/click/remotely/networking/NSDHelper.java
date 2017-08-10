@@ -20,7 +20,9 @@ import java.util.Set;
 
 public class NSDHelper {
 
-    public interface OnNetworkServicesMapChangedListener {
+    private static final String TAG = NSDHelper.class.getName();
+
+    public static interface OnNetworkServicesMapChangedListener {
         void onNetworkServiceAdded(Map<String, NsdServiceInfo> networkServicesMap, String serviceName, NsdServiceInfo serviceInfo);
         void onNetworkServiceRemoved(Map<String, NsdServiceInfo> networkServicesMap, String serviceName, NsdServiceInfo oldServiceInfo);
         void onNetworkServicesCleared(Map<String, NsdServiceInfo> networkServicesMap);
@@ -29,14 +31,17 @@ public class NSDHelper {
 
     private OnNetworkServicesMapChangedListener mapChangedListener;
 
-    private static final String TAG = NSDHelper.class.getName();
+    public static interface OnNetworkServiceResolvedListener {
+        void onNetworkServiceResolved(NsdServiceInfo serviceInfo);
+    }
+
+    private OnNetworkServiceResolvedListener serviceResolvedListener;
 
     private Context mContext;
     private NsdManager mNsdManager;
     private NsdManager.RegistrationListener mRegistrationListener;
     private NsdManager.DiscoveryListener mDiscoveryListener;
     private NsdManager.ResolveListener mResolveListener;
-    private NsdServiceInfo mService;
 
     // initialized while registering new network service
     private String mRegisteredServiceName;
@@ -48,6 +53,8 @@ public class NSDHelper {
 
     // collection of found network services
     private Map<String, NsdServiceInfo> mNetworkServicesMap;
+    // last resolved network service
+    private NsdServiceInfo mResolvedService;
 
     private NSDHelper(Context context) {
         mContext = context;
@@ -65,8 +72,11 @@ public class NSDHelper {
 
     // simplified helper listeners
     public void setOnNetworkServicesMapChangedListener(OnNetworkServicesMapChangedListener listener) {
-
         this.mapChangedListener = listener;
+    }
+
+    public void setOnNetworkServiceResolvedListener(OnNetworkServiceResolvedListener listener) {
+        this.serviceResolvedListener = listener;
     }
 
     // complex native listeners
@@ -222,10 +232,16 @@ public class NSDHelper {
                     Log.d(TAG, "Same IP.");
                     return;
                 }
-                mService = serviceInfo;
-                int port = mService.getPort();
-                InetAddress host = mService.getHost();
-                Log.d(TAG, "Resolved host: " + host + ", " + port + ".");
+                mResolvedService = serviceInfo;
+
+                String name = mResolvedService.getServiceName();
+                int port = mResolvedService.getPort();
+                InetAddress host = mResolvedService.getHost();
+                Log.d(TAG, "Resolved service: " + name + " on host: " + host + ", with port number: " + port + ".");
+
+                if(serviceResolvedListener != null) {
+                    serviceResolvedListener.onNetworkServiceResolved(serviceInfo);
+                }
             }
         };
 

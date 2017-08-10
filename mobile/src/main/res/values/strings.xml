@@ -265,6 +265,12 @@
     <string name="dialog_user_device_port_number_error">Incorrect Port Number, should be in range 1025 to 65535!</string>
     <string name="dialog_user_device_form_submission_errors">Correct errors in the following input fields:</string>
 
+    <string name="remote_device_details_name">Device Name</string>
+    <string name="remote_device_details_host">Host address</string>
+    <string name="remote_device_details_port_number">Port Number</string>
+    <string name="remote_device_details_connect">Connect</string>
 
+    <string name="recycler_item_removed">Removed</string>
+    <string name="recycler_item_undo">UNDO</string>
 
 </resources>

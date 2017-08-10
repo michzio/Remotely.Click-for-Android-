@@ -203,6 +203,9 @@ public class UserDeviceInfoProvider extends ContentProvider {
 
         Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, groupBy, having, sortOrder);
 
+        // set notification URI for retrieved Cursor object, to tell the cursor what URI to watch,
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+
         // returning the result set Cursor
         return cursor;
     }

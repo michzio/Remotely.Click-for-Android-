@@ -6,7 +6,7 @@ package click.remotely.model;
 
 public class DeviceInfo {
 
-    enum Type {
+    public static enum Type {
         REMOTELY_FOUND,
         USER_DEFINED
     }

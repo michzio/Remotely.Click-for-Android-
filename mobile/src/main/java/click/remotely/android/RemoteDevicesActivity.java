@@ -1,6 +1,10 @@
 package click.remotely.android;
 
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.net.nsd.NsdServiceInfo;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
@@ -16,13 +21,18 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import click.remotely.android.dialog.UserDeviceDialogFragment;
+import click.remotely.android.recycler.RecyclerClickListener;
+import click.remotely.android.recycler.SwipeDeleteBackgroundItemDecoration;
+import click.remotely.android.recycler.SwipeDeleteHelper;
 import click.remotely.database.UserDeviceInfoProvider;
 import click.remotely.model.DeviceInfo;
 import click.remotely.model.RemoteDeviceInfo;
@@ -93,6 +103,7 @@ public class RemoteDevicesActivity extends AppCompatActivity {
                 .addDefaultResolveListener();
 
         mNsdHelper.setOnNetworkServicesMapChangedListener(remoteDevicesMapListener);
+        mNsdHelper.setOnNetworkServiceResolvedListener(remoteDeviceResolvedListener);
     }
 
     private void configureUserDevicesMap() {
@@ -111,10 +122,43 @@ public class RemoteDevicesActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mRecyclerLayoutManager);
-        mRecyclerAdapter = new RemoteDevicesRecyclerAdapter();
+        mRecyclerAdapter = new RemoteDevicesRecyclerAdapter(this);
         mRecyclerView.setAdapter(mRecyclerAdapter);
         mDividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
         mRecyclerView.addItemDecoration(mDividerItemDecoration);
+        mRecyclerView.addOnItemTouchListener( new RecyclerClickListener(this, mRecyclerView, remoteDeviceItemClickListener));
+
+        /* Alternative way to hook up item click and long click event listeners
+            mRecyclerAdapter.setOnItemClickListener(new RemoteDevicesRecyclerAdapter.OnItemClickListener() {
+                @Override
+                public void onClick(View view, int position) {
+                    Toast.makeText(RemoteDevicesActivity.this, "onClick()", Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onLongClick(View view, int position) {
+                    Toast.makeText(RemoteDevicesActivity.this, "onLongClick()", Toast.LENGTH_LONG).show();
+                }
+            });
+        */
+
+        mRecyclerAdapter.setOnDeviceConnectionListener(deviceInfo -> deviceConnection(deviceInfo));
+
+        Drawable deleteBackgroundColor = new ColorDrawable(ContextCompat.getColor(this, R.color.colorPowerRed));
+        Drawable leftClearIcon = ContextCompat.getDrawable(this, R.drawable.ic_delete_sweep_left_black_24dp);
+                 leftClearIcon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        Drawable rightClearIcon = ContextCompat.getDrawable(this, R.drawable.ic_delete_sweep_right_black_24dp);
+                 rightClearIcon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        int clearIconMargin = (int) getResources().getDimension(R.dimen.swipeDeleteClearIconMargin);
+
+        // attach Item Touch Helper to Recycler View in order to handle swipe to delete behaviour
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeDeleteHelper(this, mRecyclerAdapter, deleteBackgroundColor, leftClearIcon, rightClearIcon, clearIconMargin));
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
+
+        // add another Item Decoration that will draw the red background
+        // in the empty space while the items are animating to their new positions
+        // after an item is removed
+        // mRecyclerView.addItemDecoration(new SwipeDeleteBackgroundItemDecoration(deleteBackgroundColor));
     }
 
     @Override
@@ -160,25 +204,45 @@ public class RemoteDevicesActivity extends AppCompatActivity {
         public void onNetworkServiceAdded(Map<String, NsdServiceInfo> networkServicesMap, String serviceName, NsdServiceInfo serviceInfo) {
 
             Log.d(TAG,  "Remote device " + serviceName + " added.");
+
             // wrap NsdServiceInfo object into RemoteDeviceInfo object
             DeviceInfo deviceInfo = new RemoteDeviceInfo(serviceInfo);
-            mRecyclerAdapter.add(deviceInfo);
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mRecyclerAdapter.add(deviceInfo);
+                }
+            });
         }
 
         @Override
         public void onNetworkServiceRemoved(Map<String, NsdServiceInfo> networkServicesMap, String serviceName, NsdServiceInfo oldServiceInfo) {
 
             Log.d(TAG,  "Remote device " + serviceName + " removed.");
+
             // wrap NsdServiceInfo object into RemoteDeviceInfo object
             DeviceInfo deviceInfo = new RemoteDeviceInfo(oldServiceInfo);
-            mRecyclerAdapter.remove(deviceInfo);
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mRecyclerAdapter.remove(deviceInfo);
+                }
+            });
         }
 
         @Override
         public void onNetworkServicesCleared(Map<String, NsdServiceInfo> networkServicesMap) {
 
             Log.d(TAG,  "Remote devices cleared.");
-            mRecyclerAdapter.clear();
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mRecyclerAdapter.clear();
+                }
+            });
         }
 
         @Override
@@ -331,6 +395,57 @@ public class RemoteDevicesActivity extends AppCompatActivity {
 
         //getSupportLoaderManager().restartLoader(USER_DEVICES_LOADER, null, userDevicesLoader);
     }
+
+    RecyclerClickListener.OnItemClickListener remoteDeviceItemClickListener = new RecyclerClickListener.OnItemClickListener() {
+
+
+        @Override
+        public void onClick(View view, int position) {
+
+            mRecyclerAdapter.unwindItemAtPosition(position);
+
+            DeviceInfo deviceInfo = mRecyclerAdapter.get(position);
+            Log.d(TAG, "Remote device item: " + deviceInfo.getDeviceName() + " clicked at position: " + position + "." );
+
+            if(deviceInfo.getType() == DeviceInfo.Type.REMOTELY_FOUND) {
+                if(deviceInfo.getHost() == null) {
+                    NsdServiceInfo serviceInfo = ((RemoteDeviceInfo) deviceInfo).getServiceInfo();
+                    mNsdHelper.resolveNetworkService(serviceInfo);
+                }
+            }
+        }
+
+        @Override
+        public void onLongClick(View view, int position) {
+
+            String deviceName = mRecyclerAdapter.get(position).getDeviceName();
+            Log.d(TAG, "Remote device item: " + deviceName + " long clicked at position: " + position + "." );
+        }
+    };
+
+    NSDHelper.OnNetworkServiceResolvedListener remoteDeviceResolvedListener = new NSDHelper.OnNetworkServiceResolvedListener() {
+
+        @Override
+        public void onNetworkServiceResolved(NsdServiceInfo serviceInfo) {
+
+            final DeviceInfo deviceInfo = new RemoteDeviceInfo(serviceInfo);
+            final int position = mRecyclerAdapter.indexOf(deviceInfo);
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mRecyclerAdapter.updateItemAt(position, deviceInfo);
+                }
+            });
+        }
+    };
+
+    private void deviceConnection(DeviceInfo deviceInfo) {
+
+        Toast.makeText(this, "Connecting device " + deviceInfo.getDeviceName() + ".", Toast.LENGTH_LONG).show();
+    }
 }
+
+
 
 
