@@ -17,7 +17,30 @@ add_library( # Sets the name of the library.
              SHARED
 
              # Provides a relative path to your source file(s).
-             src/main/cpp/native-lib.cpp )
+             src/main/cpp/native-lib.c )
+
+# OpenCV native for Android
+set(OPENCV_HOME ${CMAKE_CURRENT_SOURCE_DIR}/../../OpenCV-android-sdk)
+set(OpenCV_STATIC ON)
+set(OpenCV_DIR ${OPENCV_HOME}/sdk/native/jni)
+
+# Add other CMake subprojects to link against it's libraries
+# subprojects paths
+set(REMOTE_CONTROLLER_API_CLIENT_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../../c/client )
+set(REMOTE_CONTROLLER_API_CLIENT_BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../../c/client/outputs )
+# add subprojects
+add_subdirectory(   # Specifies the directory of the CMakeLists.txt file.
+                    ${REMOTE_CONTROLLER_API_CLIENT_SRC_DIR}
+                    # Specifies the directory for the build outputs.
+                    ${REMOTE_CONTROLLER_API_CLIENT_BUILD_DIR} )
+
+# include header files of subproject
+set(NETWORKING_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../../c/networking )
+set(COMMON_FUNCTIONS_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../../c/common )
+include_directories(${REMOTE_CONTROLLER_API_CLIENT_SRC_DIR}/include)
+include_directories(${NETWORKING_SRC_DIR}/include)
+include_directories(${COMMON_FUNCTIONS_SRC_DIR}/include)
+include_directories(${COMMON_FUNCTIONS_SRC_DIR}/libraries)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -42,3 +65,5 @@ target_link_libraries( # Specifies the target library.
                        # Links the target library to the log library
                        # included in the NDK.
                        ${log-lib} )
+
+target_link_libraries( native-lib RC_Client_Lib )

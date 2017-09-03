@@ -10,12 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import click.remotely.android.MainDrawerActivity;
 import click.remotely.android.R;
+import click.remotely.android.services.RemoteControllerClientService;
 
 public class NumpadFragment extends Fragment {
 
     private static final String TAG = NumpadFragment.class.getName();
     private static final String ACTIVITY_TITLE_KEY = "ACTIVITY TITLE KEY";
+
+    private static final Map<Integer, String> numpadButtonIdKeyNameMap = new HashMap<>();
 
     public NumpadFragment() { }
 
@@ -72,8 +79,36 @@ public class NumpadFragment extends Fragment {
         @Override
         public void onClick(View v) {
 
-            String numpadKey = ((Button) v).getText().toString();
-            Log.d(TAG, "Numpad key: " + numpadKey + " clicked.");
+            Button numpadButton = (Button) v;
+            String virtualKeyName = numpadButtonIdKeyNameMap.get(numpadButton.getId());
+
+            Log.d(TAG, "Numpad key: " + virtualKeyName + " clicked.");
+
+            RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+            if(clientService != null) {
+                clientService.keyboardInput(virtualKeyName, "");
+            }
         }
     };
+
+    static {
+        numpadButtonIdKeyNameMap.put(R.id.numpad_0_btn, "kVK_ANSI_Keypad0");
+        numpadButtonIdKeyNameMap.put(R.id.numpad_1_btn, "kVK_ANSI_Keypad1");
+        numpadButtonIdKeyNameMap.put(R.id.numpad_2_btn, "kVK_ANSI_Keypad2");
+        numpadButtonIdKeyNameMap.put(R.id.numpad_3_btn, "kVK_ANSI_Keypad3");
+        numpadButtonIdKeyNameMap.put(R.id.numpad_4_btn, "kVK_ANSI_Keypad4");
+        numpadButtonIdKeyNameMap.put(R.id.numpad_5_btn, "kVK_ANSI_Keypad5");
+        numpadButtonIdKeyNameMap.put(R.id.numpad_6_btn, "kVK_ANSI_Keypad6");
+        numpadButtonIdKeyNameMap.put(R.id.numpad_7_btn, "kVK_ANSI_Keypad7");
+        numpadButtonIdKeyNameMap.put(R.id.numpad_8_btn, "kVK_ANSI_Keypad8");
+        numpadButtonIdKeyNameMap.put(R.id.numpad_9_btn, "kVK_ANSI_Keypad9");
+        numpadButtonIdKeyNameMap.put(R.id.numpad_clear_btn, "kVK_Delete");
+        numpadButtonIdKeyNameMap.put(R.id.numpad_decimal_point_btn, "kVK_ANSI_KeypadDecimal");
+        numpadButtonIdKeyNameMap.put(R.id.numpad_divide_sign_btn, "kVK_ANSI_KeypadDivide");
+        numpadButtonIdKeyNameMap.put(R.id.numpad_enter_btn, "kVK_ANSI_KeypadEnter");
+        numpadButtonIdKeyNameMap.put(R.id.numpad_equal_sign_btn, "kVK_ANSI_KeypadEquals");
+        numpadButtonIdKeyNameMap.put(R.id.numpad_minus_sign_btn, "kVK_ANSI_KeypadMinus");
+        numpadButtonIdKeyNameMap.put(R.id.numpad_multiply_sign_btn, "kVK_ANSI_KeypadMultiply");
+        numpadButtonIdKeyNameMap.put(R.id.numpad_plus_sign_btn, "kVK_ANSI_KeypadPlus");
+    }
 }

@@ -7,13 +7,17 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.os.Handler;
+import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
+import click.remotely.android.MainDrawerActivity;
 import click.remotely.android.R;
+import click.remotely.android.services.RemoteControllerClientService;
 
 /**
  * Created by michzio on 03/07/2017.
@@ -22,6 +26,8 @@ import click.remotely.android.R;
 public class TouchpadView extends View implements OnTouchListener {
 
     private static final String TAG = TouchpadView.class.getName();
+
+    private TouchpadGestureDetector mTouchpadGestureDetector;
 
     private int mPaintColor;
     private float mStrokeWidth;
@@ -58,27 +64,93 @@ public class TouchpadView extends View implements OnTouchListener {
         setOnTouchListener(this);
     }
 
+   public void setTouchpadGestureDetector(TouchpadGestureDetector touchpadGestureDetector) {
+        mTouchpadGestureDetector = touchpadGestureDetector;
+   }
+
+    private long mLastErasingTime = System.currentTimeMillis();
+    private float mLastX, mLastY;
+    private int mPointerCount = 0;
+
+    private Handler handler = new Handler();
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
 
-        switch(event.getAction()) {
+        if(mTouchpadGestureDetector != null) {
+            mTouchpadGestureDetector.onTouchEvent(event);
+        }
+
+        final int action = MotionEventCompat.getActionMasked(event);
+
+        switch(action) {
+
+            case MotionEvent.ACTION_POINTER_DOWN:
+                mPointerCount++;
+                return false;
+
+            case MotionEvent.ACTION_POINTER_UP:
+                Log.d(TAG, "Action: POINTER UP");
+                mPointerCount--;
+
+                mPath.reset();
+                invalidate();
+
+                mPath.moveTo(event.getX(), event.getY());
+                mLastX = event.getX(); mLastY = event.getY();
+                mLastErasingTime = System.currentTimeMillis();
+                return false;
 
             case MotionEvent.ACTION_DOWN:
+
+                handler.removeCallbacksAndMessages(null);
+
+                mPath.reset();
+                invalidate();
+
                 mPath.moveTo(event.getX(), event.getY());
                 resetDirtyRect(event.getX(), event.getY());
+                mLastX = event.getX(); mLastY = event.getY();
                 return true;
-            case MotionEvent.ACTION_MOVE:
+
             case MotionEvent.ACTION_UP:
+                Log.d(TAG, "Action: UP");
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPath.reset();
+                        mPath.moveTo(mLastX, mLastY);
+                        invalidate();
+                        mLastErasingTime = System.currentTimeMillis();
+                    }
+                }, 1000);
+
+                return false;
+            case MotionEvent.ACTION_MOVE:
+                Log.d(TAG, "Action: MOVE");
+
+                if(mPointerCount > 0) {
+                    return false;
+                }
+
+                if(System.currentTimeMillis() - mLastErasingTime  > 1000) {
+                    mPath.reset();
+                    mPath.moveTo(mLastX, mLastY);
+                    invalidate();
+                    mLastErasingTime = System.currentTimeMillis();
+                }
                 // draw path using history of touch events
                 // android can skip some touch events if there is many of them
                 for(int i=0; i < event.getHistorySize(); i++) {
                     resizeDirtyRect(event.getHistoricalX(i), event.getHistoricalY(i));
                     mPath.lineTo(event.getHistoricalX(i), event.getHistoricalY(i));
+                    mLastX = event.getHistoricalX(i); mLastY = event.getHistoricalY(i);
                 }
                 // draw path to the position of the last touch event
                 mPath.lineTo(event.getX(), event.getY());
                 resizeDirtyRect(event.getX(), event.getY());
+                mLastX = event.getX(); mLastY = event.getY();
 
                 // enforce redrawing TouchPad View dirty rectangle
                 invalidate( (int) (mDirtyRect.left - mPaint.getStrokeWidth()/2),

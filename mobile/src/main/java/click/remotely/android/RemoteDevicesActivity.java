@@ -1,5 +1,9 @@
 package click.remotely.android;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -7,6 +11,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.net.nsd.NsdServiceInfo;
+import android.os.IBinder;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,9 +35,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import click.remotely.android.dialog.UserDeviceDialogFragment;
+import click.remotely.android.exceptions.DisconnectingRemoteDeviceException;
 import click.remotely.android.recycler.RecyclerClickListener;
-import click.remotely.android.recycler.SwipeDeleteBackgroundItemDecoration;
 import click.remotely.android.recycler.SwipeDeleteHelper;
+import click.remotely.android.services.RemoteControllerClientService;
 import click.remotely.database.UserDeviceInfoProvider;
 import click.remotely.model.DeviceInfo;
 import click.remotely.model.RemoteDeviceInfo;
@@ -58,6 +64,9 @@ public class RemoteDevicesActivity extends AppCompatActivity {
 
     private FloatingActionButton mFloatingActionButton;
     private Boolean mIsLargeLayout;
+
+    private boolean mClientServiceBound = false;
+    private RemoteControllerClientService mClientService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +151,7 @@ public class RemoteDevicesActivity extends AppCompatActivity {
             });
         */
 
-        mRecyclerAdapter.setOnDeviceConnectionListener(deviceInfo -> deviceConnection(deviceInfo));
+        mRecyclerAdapter.setOnDeviceConnectionListener(mDeviceConnectionListener);
 
         Drawable deleteBackgroundColor = new ColorDrawable(ContextCompat.getColor(this, R.color.colorPowerRed));
         Drawable leftClearIcon = ContextCompat.getDrawable(this, R.drawable.ic_delete_sweep_left_black_24dp);
@@ -159,6 +168,20 @@ public class RemoteDevicesActivity extends AppCompatActivity {
         // in the empty space while the items are animating to their new positions
         // after an item is removed
         // mRecyclerView.addItemDecoration(new SwipeDeleteBackgroundItemDecoration(deleteBackgroundColor));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Log.d(TAG, "onStart method called.");
+
+        if(RemoteControllerClientService.isRunning(this)) {
+
+            // bind to Remote Controller Client Service
+            Intent intent = new Intent(this, RemoteControllerClientService.class);
+            bindService(intent, mClientServiceConnection, Context.BIND_AUTO_CREATE);
+        }
     }
 
     @Override
@@ -183,6 +206,23 @@ public class RemoteDevicesActivity extends AppCompatActivity {
         }
         //getSupportLoaderManager().destroyLoader(USER_DEVICES_LOADER);
         super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+
+        Log.d(TAG, "onStop method called.");
+
+        if(mClientServiceBound && RemoteControllerClientService.isRunning(this)) {
+
+            // unbind from Remote Controller Client Service
+            if(mClientServiceBound) {
+                unbindService(mClientServiceConnection);
+                mClientServiceBound = false;
+            }
+        }
+
+        super.onStop();
     }
 
     @Override
@@ -212,6 +252,7 @@ public class RemoteDevicesActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     mRecyclerAdapter.add(deviceInfo);
+                    refreshConnectedDeviceOnList();
                 }
             });
         }
@@ -440,9 +481,91 @@ public class RemoteDevicesActivity extends AppCompatActivity {
         }
     };
 
-    private void deviceConnection(DeviceInfo deviceInfo) {
+    private RemoteDevicesRecyclerAdapter.OnDeviceConnectionListener mDeviceConnectionListener =
+            new RemoteDevicesRecyclerAdapter.OnDeviceConnectionListener() {
 
-        Toast.makeText(this, "Connecting device " + deviceInfo.getDeviceName() + ".", Toast.LENGTH_LONG).show();
+        @Override
+        public void onDeviceConnection(DeviceInfo deviceInfo) {
+
+            Toast.makeText(RemoteDevicesActivity.this, "Connecting device " + deviceInfo.getDeviceName() + ".", Toast.LENGTH_LONG).show();
+
+            Intent intent = new Intent(RemoteDevicesActivity.this, RemoteControllerClientService.class);
+            intent.putExtra(RemoteControllerClientService.EXTRA_CONNECTION_IP, deviceInfo.getHost());
+            intent.putExtra(RemoteControllerClientService.EXTRA_CONNECTION_PORT, String.valueOf(deviceInfo.getPortNumber()));
+            intent.putExtra(RemoteControllerClientService.EXTRA_SECURITY_PASSWORD, "");
+            intent.putExtra(RemoteControllerClientService.EXTRA_CLIENT_IDENTITY, "Android Phone");
+            intent.putExtra(RemoteControllerClientService.EXTRA_REMOTE_DEVICE_NAME, deviceInfo.getDeviceName());
+            intent.putExtra(RemoteControllerClientService.EXTRA_REMOTE_DEVICE_TYPE, deviceInfo.getType());
+            startService(intent);
+
+            if(!mClientServiceBound) {
+                bindService(intent, mClientServiceConnection, Context.BIND_AUTO_CREATE);
+            }
+
+        }
+
+        @Override
+        public void onDeviceDisconnection(DeviceInfo deviceInfo) throws DisconnectingRemoteDeviceException {
+
+            if(RemoteControllerClientService.isRunning(RemoteDevicesActivity.this)) {
+                if(mClientService != null) {
+                    if(!deviceInfo.getDeviceName().equals(mClientService.getRemoteDeviceName()))
+                        throw new DisconnectingRemoteDeviceException("Disconnecting device's name doesn't match name of remote device connected in service.");
+
+                    mClientService.stopConnection();
+                }
+            }
+
+            if(mClientServiceBound) {
+                unbindService(mClientServiceConnection);
+                mClientServiceBound = false;
+            }
+
+            refreshConnectedDeviceOnList();
+        }
+    };
+
+    /**
+     * Defines callbacks for Remote Controller Client Service binding, passed to bindService()
+     */
+    private ServiceConnection mClientServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder binder) {
+
+            // we've bound to Remote Controller Client Service, cast the IBinder and get service instance
+            RemoteControllerClientService.LocalBinder localBinder = (RemoteControllerClientService.LocalBinder) binder;
+            mClientService = localBinder.getService();
+            mClientServiceBound = true;
+
+            refreshConnectedDeviceOnList();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mClientServiceBound = false;
+            mClientService = null;
+        }
+    };
+
+    private void refreshConnectedDeviceOnList() {
+
+        DeviceInfo deviceInfo = null;
+
+        if(mClientServiceBound && (mClientService != null)) {
+
+            String deviceName = mClientService.getRemoteDeviceName();
+            String deviceIp = mClientService.getRemoteDeviceIp();
+            String devicePort = mClientService.getRemoteDevicePort();
+            DeviceInfo.Type deviceType = mClientService.getRemoteDeviceType();
+
+
+            if(deviceName != null) {
+                deviceInfo = new DeviceInfo(deviceName, deviceIp, Integer.valueOf(devicePort));
+                deviceInfo.setType(deviceType);
+            }
+        }
+
+        mRecyclerAdapter.highlightItem(deviceInfo);
     }
 }
 

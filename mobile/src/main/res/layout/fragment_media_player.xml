@@ -188,7 +188,7 @@
         android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="64dp" />
+        android:layout_marginStart="32dp" />
 
     <ImageButton
         android:id="@+id/media_player_shuffle_btn"
@@ -206,6 +206,25 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginStart="8dp"
         app:layout_constraintStart_toEndOf="@+id/media_player_loop_btn"
+        app:layout_constraintEnd_toStartOf="@+id/media_player_subtitles_btn"
+        android:layout_marginEnd="8dp" />
+
+    <ImageButton
+        android:id="@+id/media_player_subtitles_btn"
+        android:layout_width="32dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:srcCompat="@drawable/ic_subtitles_black_24dp"
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:elevation="4dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:padding="0dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@+id/media_player_shuffle_btn"
         app:layout_constraintEnd_toStartOf="@+id/media_player_fullscreen_btn"
         android:layout_marginEnd="8dp" />
 
@@ -224,6 +243,57 @@
         android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="64dp" />
+        android:layout_marginEnd="32dp" />
+
+    <ImageButton
+        android:id="@+id/media_player_player_volume_up_btn"
+        android:layout_width="32dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:srcCompat="@drawable/ic_player_volume_up_24dp"
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:elevation="4dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:padding="0dp"
+        app:layout_constraintEnd_toStartOf="@+id/media_player_volume_up_btn"
+        android:layout_marginEnd="48dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@+id/volume_seek_bar" />
+
+    <ImageButton
+        android:id="@+id/media_player_player_volume_down_btn"
+        android:layout_width="32dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/selectable_background"
+        android:elevation="4dp"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
+        android:tint="@android:color/white"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:layout_constraintEnd_toStartOf="@+id/media_player_player_volume_up_btn"
+        app:layout_constraintStart_toEndOf="@+id/media_player_player_volume_mute_btn"
+        app:layout_constraintTop_toBottomOf="@+id/volume_seek_bar"
+        app:srcCompat="@drawable/ic_player_volume_down_24dp" />
+
+    <ImageButton
+        android:id="@+id/media_player_player_volume_mute_btn"
+        android:layout_width="32dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:srcCompat="@drawable/ic_player_volume_mute_black_24dp"
+        android:background="@drawable/selectable_background"
+        android:tint="@android:color/white"
+        android:elevation="4dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:padding="0dp"
+        app:layout_constraintStart_toEndOf="@+id/media_player_volume_mute_btn"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@+id/volume_seek_bar" />
 
 </android.support.constraint.ConstraintLayout>

@@ -2,16 +2,16 @@ package click.remotely.android.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.security.PrivilegedExceptionAction;
-
+import click.remotely.android.MainDrawerActivity;
 import click.remotely.android.R;
+import click.remotely.android.services.RemoteControllerClientService;
 
 /**
  * Created by michzio on 15/07/2017.
@@ -63,8 +63,12 @@ public class MediaPlayerControlsFragment extends Fragment {
         mVolumeSeekBar.setOnSeekBarChangeListener(volumeChangeListener);
 
         // volume buttons listeners
-        getActivity().findViewById(R.id.media_player_volume_mute_btn).setOnClickListener( v -> muteMediaPlayerVolume() );
-        getActivity().findViewById(R.id.media_player_volume_up_btn).setOnClickListener( v -> maxMediaPlayerVolume() );
+        getActivity().findViewById(R.id.media_player_volume_mute_btn).setOnClickListener( v -> mediaPlayerVolumeMute() );
+        getActivity().findViewById(R.id.media_player_volume_up_btn).setOnClickListener( v -> mediaPlayerVolumeMax() );
+
+        getActivity().findViewById(R.id.media_player_player_volume_mute_btn).setOnClickListener( v -> mediaPlayerPlayerVolumeMute() );
+        getActivity().findViewById(R.id.media_player_player_volume_down_btn).setOnClickListener( v -> mediaPlayerPlayerVolumeDown() );
+        getActivity().findViewById(R.id.media_player_player_volume_up_btn).setOnClickListener( v -> mediaPlayerPlayerVolumeUp() );
 
         // media player buttons listeners
         getActivity().findViewById(R.id.media_player_play_pause_btn).setOnClickListener( v -> mediaPlayerPlayButtonClicked() );
@@ -77,13 +81,14 @@ public class MediaPlayerControlsFragment extends Fragment {
         getActivity().findViewById(R.id.media_player_loop_btn).setOnClickListener(v -> mediaPlayerLoopButtonClicked() );
         getActivity().findViewById(R.id.media_player_shuffle_btn).setOnClickListener(v -> mediaPlayerShuffleButtonClicked());
         getActivity().findViewById(R.id.media_player_fullscreen_btn).setOnClickListener(v -> mediaPlayerFullScreenButtonClicked());
+        getActivity().findViewById(R.id.media_player_subtitles_btn).setOnClickListener(v -> mediaPlayerSubtitlesButtonClicked());
     }
 
     SeekBar.OnSeekBarChangeListener volumeChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-            updateMediaPlayerVolume(progress);
+            mediaPlayerVolumeSetValue(progress);
         }
 
         @Override
@@ -93,66 +98,165 @@ public class MediaPlayerControlsFragment extends Fragment {
         public void onStopTrackingTouch(SeekBar seekBar) { }
     };
 
-    private void muteMediaPlayerVolume() {
+    private void mediaPlayerVolumeMute() {
 
         mVolumeSeekBar.setProgress(0);
+        Log.d(TAG,  "MediaPlayer volume muted!");
 
-        Toast.makeText(getActivity(), "MediaPlayer volume muted!", Toast.LENGTH_SHORT).show();
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.systemVolumeMute();
+        }
     }
 
-    private void maxMediaPlayerVolume() {
+    private void mediaPlayerVolumeMax() {
         mVolumeSeekBar.setProgress(100);
 
-        Toast.makeText(getActivity(), "MediaPlayer volume 100.", Toast.LENGTH_SHORT).show();
+        Log.d(TAG,"MediaPlayer volume 100.");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.systemVolumeMax();
+        }
     }
 
-    private void updateMediaPlayerVolume(int volume) {
+    private void mediaPlayerVolumeSetValue(int volume) {
 
-        Toast.makeText(getActivity(), "MediaPlayer volume " + volume, Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "MediaPlayer volume " + volume);
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.systemVolume(volume);
+        }
+    }
+
+    private void mediaPlayerPlayerVolumeMute() {
+
+        Log.d(TAG,  "MediaPlayer player volume muted!");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.playerVolumeMute();
+        }
+    }
+
+    private void mediaPlayerPlayerVolumeDown() {
+
+        Log.d(TAG,  "MediaPlayer player volume down.");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.playerVolumeDown();
+        }
+    }
+
+    private void mediaPlayerPlayerVolumeUp() {
+
+        Log.d(TAG,  "MediaPlayer player volume up.");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.playerVolumeUp();
+        }
     }
 
     private void mediaPlayerPlayButtonClicked() {
 
-        Toast.makeText(getActivity(), "MediaPlayer play/pause clicked", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "MediaPlayer play/pause clicked");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.playerPlayPause();
+        }
     }
 
     private void mediaPlayerStopButtonClicked() {
 
-        Toast.makeText(getActivity(), "MediaPlayer stop clicked", Toast.LENGTH_SHORT).show();
+        Log.d(TAG,"MediaPlayer stop clicked");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.playerStop();
+        }
     }
 
     private void mediaPlayerStepForwardButtonClicked() {
 
-        Toast.makeText(getActivity(), "MediaPlayer step forward clicked", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "MediaPlayer step forward clicked");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.playerStepForward();
+        }
     }
 
     private void mediaPlayerStepBackwardButtonClicke() {
 
-        Toast.makeText(getActivity(), "MediaPlayer step backward clicked", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "MediaPlayer step backward clicked");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.playerStepBackward();
+        }
     }
 
     private void mediaPlayerSkipNextButtonClicked() {
 
-        Toast.makeText(getActivity(), "MediaPlayer skip next clicked", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "MediaPlayer skip next clicked");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.playerSkipNext();
+        }
     }
 
     private void mediaPlayerSkipPreviousButtonClicked() {
 
-        Toast.makeText(getActivity(), "MediaPlayer skip previous clicked", Toast.LENGTH_SHORT).show();
+        Log.d(TAG,"MediaPlayer skip previous clicked");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.playerSkipPrevious();
+        }
     }
 
     private void mediaPlayerLoopButtonClicked() {
 
-        Toast.makeText(getActivity(), "MediaPlayer loop clicked", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "MediaPlayer loop clicked");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.playerLoop();
+        }
     }
 
     private void mediaPlayerShuffleButtonClicked() {
 
-        Toast.makeText(getActivity(), "MediaPlayer shuffle clicked", Toast.LENGTH_SHORT).show();
+        Log.d( TAG,"MediaPlayer shuffle clicked");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.playerShuffle();
+        }
     }
 
     private void mediaPlayerFullScreenButtonClicked() {
 
-        Toast.makeText(getActivity(), "Media Player full screen clicked", Toast.LENGTH_SHORT).show();
+        Log.d(TAG,"Media Player full screen clicked");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.playerFullScreen();
+        }
+    }
+
+    private void mediaPlayerSubtitlesButtonClicked() {
+
+        Log.d(TAG,"Media Player subtitles clicked");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.playerSubtitles();
+        }
     }
 }

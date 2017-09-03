@@ -2,12 +2,15 @@ package click.remotely.android.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import click.remotely.android.MainDrawerActivity;
 import click.remotely.android.R;
+import click.remotely.android.services.RemoteControllerClientService;
 
 /**
  * Created by michzio on 15/07/2017.
@@ -59,69 +62,129 @@ public class SlideShowControlsFragment extends Fragment {
         getActivity().findViewById(R.id.slide_show_next_no_animation_btn).setOnClickListener(v -> slideShowNextNoAnimationClicked());
         getActivity().findViewById(R.id.slide_show_arrow_pointer_btn).setOnClickListener(v -> slideShowArrowPointerClicked());
         getActivity().findViewById(R.id.slide_show_pen_pointer_btn).setOnClickListener(v -> slideShowPenPointerClicked());
-        getActivity().findViewById(R.id.slide_show_blank_black_slide_btn).setOnClickListener(v -> slideShowBlankBlackSlideClicked());
-        getActivity().findViewById(R.id.slide_show_blank_white_slide_btn).setOnClickListener(v -> slideShowBlankWhiteSlideClicked());
+        getActivity().findViewById(R.id.slide_show_blank_black_slide_btn).setOnClickListener(v -> slideShowBlankSlideBlackClicked());
+        getActivity().findViewById(R.id.slide_show_blank_white_slide_btn).setOnClickListener(v -> slideShowBlankSlideWhiteClicked());
         getActivity().findViewById(R.id.slide_show_first_slide_btn).setOnClickListener(v -> slideShowFirstSlideClicked());
         getActivity().findViewById(R.id.slide_show_last_slide_btn).setOnClickListener(v -> slideShowLastSlideClicked());
     }
 
     private void slideShowStartClicked() {
 
-        Toast.makeText(getActivity(), "Slide show start", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Slide show start");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.slideShowStart();
+        }
     }
 
     private void slideShowEndClicked() {
 
-        Toast.makeText(getActivity(), "Slide show end", Toast.LENGTH_SHORT).show();
+        Log.d(TAG,"Slide show end");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.slideShowEnd();
+        }
     }
 
     private void slideShowPreviousClicked() {
 
-        Toast.makeText(getActivity(), "Slide show previous", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Slide show previous");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.slideShowPrevious(true);
+        }
     }
 
     private void slideShowNextClicked() {
 
-        Toast.makeText(getActivity(), "Slide show next", Toast.LENGTH_SHORT).show();
+        Log.d( TAG,"Slide show next");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.slideShowNext(true);
+        }
     }
 
     private void slideShowPreviousNoAnimationClicked() {
 
-        Toast.makeText(getActivity(), "Slide show previous no animation", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Slide show previous no animation");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.slideShowPrevious(false);
+        }
     }
 
     private void slideShowNextNoAnimationClicked() {
 
-        Toast.makeText(getActivity(), "Slide show next no animation", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Slide show next no animation");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.slideShowNext(false);
+        }
     }
 
     private void slideShowArrowPointerClicked() {
 
-        Toast.makeText(getActivity(), "Slide show arrow pointer", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Slide show arrow pointer");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.slideShowPointer(RemoteControllerClientService.SLIDE_SHOW_POINTER_ARROW);
+        }
     }
 
     private void slideShowPenPointerClicked() {
 
-        Toast.makeText(getActivity(), "Slide show pen pointer", Toast.LENGTH_SHORT).show();
+        Log.d(TAG,"Slide show pen pointer");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.slideShowPointer(RemoteControllerClientService.SLIDE_SHOW_POINTER_PEN);
+        }
     }
 
-    private void slideShowBlankBlackSlideClicked() {
+    private void slideShowBlankSlideBlackClicked() {
 
-        Toast.makeText(getActivity(), "Slide show blank black slide", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Slide show blank black slide");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.slideShowBlankSlide(RemoteControllerClientService.SLIDE_SHOW_BLANK_SLIDE_BLACK);
+        }
     }
 
-    private void slideShowBlankWhiteSlideClicked() {
+    private void slideShowBlankSlideWhiteClicked() {
 
-        Toast.makeText(getActivity(), "Slide show blank white slide", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Slide show blank white slide");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.slideShowBlankSlide(RemoteControllerClientService.SLIDE_SHOW_BLANK_SLIDE_WHITE);
+        }
     }
 
     private void slideShowFirstSlideClicked() {
 
-        Toast.makeText(getActivity(), "Slide show first slide", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Slide show first slide");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.slideShowFirstSlide();
+        }
     }
 
     private void slideShowLastSlideClicked() {
 
-        Toast.makeText(getActivity(), "Slide show last slide", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Slide show last slide");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.slideShowLastSlide();
+        }
     }
 }

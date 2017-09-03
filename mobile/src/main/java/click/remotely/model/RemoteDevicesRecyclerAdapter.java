@@ -12,6 +12,7 @@ import android.support.annotation.UiThread;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.text.style.IconMarginSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import click.remotely.android.R;
+import click.remotely.android.exceptions.DisconnectingRemoteDeviceException;
 import click.remotely.android.recycler.SwipeDeleteHelper;
 import click.remotely.database.UserDeviceInfoProvider;
 
@@ -38,6 +40,8 @@ import click.remotely.database.UserDeviceInfoProvider;
 public class RemoteDevicesRecyclerAdapter
         extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         implements SwipeDeleteHelper.AdapterInterface {
+
+    private static final String TAG = RemoteDevicesRecyclerAdapter.class.getName();
 
     public static interface OnItemClickListener {
         public void onClick(View view, int position);
@@ -52,6 +56,7 @@ public class RemoteDevicesRecyclerAdapter
 
     public static interface OnDeviceConnectionListener {
         public void onDeviceConnection(DeviceInfo deviceInfo);
+        public void onDeviceDisconnection(DeviceInfo deviceInfo) throws DisconnectingRemoteDeviceException;
     }
 
     private OnDeviceConnectionListener mDeviceConnectionListener;
@@ -83,6 +88,7 @@ public class RemoteDevicesRecyclerAdapter
         public TextView remoteDeviceDetailsHostTextView;
         public TextView remoteDeviceDetailsPortNumberTextView;
         public Button remoteDeviceDetailsConnectButton;
+        public Button remoteDeviceDetailsDisconnectButton;
 
         public ViewHolderNormal(View v) {
             super(v);
@@ -94,6 +100,7 @@ public class RemoteDevicesRecyclerAdapter
             remoteDeviceDetailsHostTextView = (TextView) remoteDeviceDetailsView.findViewById(R.id.remote_device_details_host_text_view);
             remoteDeviceDetailsPortNumberTextView = (TextView) remoteDeviceDetailsView.findViewById(R.id.remote_device_details_port_number_text_view);
             remoteDeviceDetailsConnectButton = (Button) remoteDeviceDetailsView.findViewById(R.id.remote_device_details_connect_btn);
+            remoteDeviceDetailsDisconnectButton = (Button) remoteDeviceDetailsView.findViewById(R.id.remote_device_details_disconnect_btn);
 
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -121,6 +128,22 @@ public class RemoteDevicesRecyclerAdapter
                     if(mDeviceConnectionListener != null) {
                         DeviceInfo deviceInfo = mDataSet.get(getAdapterPosition());
                         mDeviceConnectionListener.onDeviceConnection(deviceInfo);
+                    }
+                }
+            });
+
+            remoteDeviceDetailsDisconnectButton.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    if(mDeviceConnectionListener != null) {
+                        DeviceInfo deviceInfo = mDataSet.get(getAdapterPosition());
+                        try {
+                            mDeviceConnectionListener.onDeviceDisconnection(deviceInfo);
+                        } catch (DisconnectingRemoteDeviceException e)  {
+                            Log.d(RemoteDevicesRecyclerAdapter.TAG,
+                                    "Error while disconnecting device " + deviceInfo.getDeviceName() + ": " + e.getMessage());
+                        }
                     }
                 }
             });
@@ -244,6 +267,19 @@ public class RemoteDevicesRecyclerAdapter
             viewHolder.remoteDeviceDetailsView.setVisibility(View.VISIBLE);
         } else {
             viewHolder.remoteDeviceDetailsView.setVisibility(View.GONE);
+        }
+
+        // if given device is connected then highlight it
+        if(deviceInfo.equals(highlightedDevice)) {
+            viewHolder.remoteDeviceTextView.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
+            viewHolder.remoteDeviceImageView.setColorFilter(mContext.getResources().getColor(R.color.colorPrimary));
+            viewHolder.remoteDeviceDetailsConnectButton.setVisibility(View.GONE);
+            viewHolder.remoteDeviceDetailsDisconnectButton.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.remoteDeviceTextView.setTextColor(mContext.getResources().getColor(R.color.textColorSecondary));
+            viewHolder.remoteDeviceImageView.setColorFilter(mContext.getResources().getColor(R.color.textColorSecondary));
+            viewHolder.remoteDeviceDetailsDisconnectButton.setVisibility(View.GONE);
+            viewHolder.remoteDeviceDetailsConnectButton.setVisibility(View.VISIBLE);
         }
     }
 
@@ -466,5 +502,13 @@ public class RemoteDevicesRecyclerAdapter
         mContext.getContentResolver()
                 .delete(Uri.withAppendedPath(UserDeviceInfoProvider.CONTENT_URI,
                         String.valueOf(((UserDeviceInfo) item).getDeviceId()) ), null, null);
+    }
+
+    private DeviceInfo highlightedDevice = null;
+
+    public void highlightItem(DeviceInfo deviceInfo) {
+
+        highlightedDevice = deviceInfo;
+        notifyDataSetChanged();
     }
 }

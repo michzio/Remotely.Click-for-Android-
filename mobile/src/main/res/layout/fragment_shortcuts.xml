@@ -296,22 +296,22 @@
         app:srcCompat="@drawable/ic_search_black_24dp"
         app:layout_constraintStart_toEndOf="@id/shortcuts_redo_btn"
         app:layout_constraintTop_toTopOf="@id/shortcuts_redo_btn"
-        app:layout_constraintEnd_toStartOf="@id/shortcuts_force_quite_btn" />
+        app:layout_constraintEnd_toStartOf="@id/shortcuts_force_quit_btn" />
 
     <ImageButton
-        android:id="@+id/shortcuts_force_quite_btn"
+        android:id="@+id/shortcuts_force_quit_btn"
         android:layout_width="0dp"
         android:layout_height="80dp"
 
         android:adjustViewBounds="true"
         android:background="@drawable/selectable_background"
         android:tint="@android:color/white"
-        android:contentDescription="@string/shortcuts_force_quite"
+        android:contentDescription="@string/shortcuts_force_quit"
         android:padding="16dp"
         android:scaleType="fitCenter"
 
         app:layout_constraintDimensionRatio="w,1:1"
-        app:srcCompat="@drawable/ic_force_quite_black_24dp"
+        app:srcCompat="@drawable/ic_force_quit_black_24dp"
         app:layout_constraintStart_toEndOf="@id/shortcuts_system_search_btn"
         app:layout_constraintTop_toTopOf="@id/shortcuts_system_search_btn"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -406,5 +406,14 @@
         android:layout_marginBottom="24dp"
         android:layout_marginStart="64dp"
         android:layout_marginLeft="64dp" />
+
+    <include
+        android:visibility="gone"
+        layout="@layout/bottom_sheet_keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

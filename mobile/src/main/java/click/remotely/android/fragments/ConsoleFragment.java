@@ -15,7 +15,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import click.remotely.android.MainDrawerActivity;
 import click.remotely.android.R;
+import click.remotely.android.services.RemoteControllerClientService;
 
 /**
  * Created by michzio on 15/07/2017.
@@ -84,6 +86,12 @@ public class ConsoleFragment extends Fragment {
                 mConsoleTextView.setText( Html.fromHtml( mConsoleText ));
                 hideKeyboard(mConsoleEditText);
                 clearEditText(mConsoleEditText);
+
+                RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+                if(clientService != null) {
+                    clientService.sendRawMessage(consoleInputText.toString());
+                }
+
                 return true;
             }
             else{

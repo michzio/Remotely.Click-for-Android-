@@ -8,13 +8,19 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import click.remotely.android.MainDrawerActivity;
 import click.remotely.android.R;
+import click.remotely.android.interfaces.RemoteControllerClientInterface;
+import click.remotely.android.services.RemoteControllerClientService;
+import click.remotely.inputs.BottomSheetKeyboard;
 
 /**
  * Created by michzio on 15/07/2017.
@@ -24,6 +30,10 @@ public class BrowserControlsFragment extends Fragment {
 
     private static final String TAG = BrowserControlsFragment.class.getName();
     private static final String ACTIVITY_TITLE_KEY = "ACTIVITY TITLE KEY";
+
+    private FloatingActionButton mKeyboardButton;
+    private FloatingActionButton mMouseButton;
+    private ViewGroup mBottomSheetKeyboard;
 
     public BrowserControlsFragment() { }
 
@@ -44,6 +54,7 @@ public class BrowserControlsFragment extends Fragment {
             getActivity().setTitle(savedInstanceState.getCharSequence(ACTIVITY_TITLE_KEY));
         }
 
+        initFloatingActionButtons();
         bindBrowserButtonsToClickListeners();
     }
 
@@ -55,19 +66,12 @@ public class BrowserControlsFragment extends Fragment {
         outState.putCharSequence(ACTIVITY_TITLE_KEY, getActivity().getTitle());
     }
 
-    private void bindBrowserButtonsToClickListeners() {
+    private void initFloatingActionButtons() {
 
-        // bind floating action buttons
-        getActivity().findViewById(R.id.browser_controls_fab_action_keyboard)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showSoftwareKeyboard();
-                    }
-                });
+        mKeyboardButton = (FloatingActionButton) getActivity().findViewById(R.id.browser_controls_fab_action_keyboard);
+        mMouseButton = (FloatingActionButton) getActivity().findViewById(R.id.browser_controls_fab_action_mouse);
 
-        getActivity().findViewById(R.id.browser_controls_fab_action_mouse)
-                .setOnClickListener(new View.OnClickListener() {
+        mMouseButton.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
@@ -82,7 +86,45 @@ public class BrowserControlsFragment extends Fragment {
                         //fragmentTransaction.addToBackStack("Browser Controls Show Touchpad");
                         //fragmentTransaction.commit();
                     }
-                });
+        });
+
+        mBottomSheetKeyboard = (ViewGroup) getActivity().findViewById(R.id.bottom_sheet_keyboard);
+
+        BottomSheetKeyboard keyboard = new BottomSheetKeyboard(mBottomSheetKeyboard, (RemoteControllerClientInterface) getActivity());
+
+        mKeyboardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // show custom keyboard
+                mKeyboardButton.setVisibility(View.GONE);
+                mMouseButton.setVisibility(View.GONE);
+                mBottomSheetKeyboard.setVisibility(View.VISIBLE);
+            }
+        });
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                        if(mBottomSheetKeyboard.getVisibility() == View.VISIBLE) {
+                            mBottomSheetKeyboard.setVisibility(View.GONE);
+                            mMouseButton.setVisibility(View.VISIBLE);
+                            mKeyboardButton.setVisibility(View.VISIBLE);
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
+    private void bindBrowserButtonsToClickListeners() {
+
 
         // bind browser control buttons
         getActivity().findViewById(R.id.browser_controls_new_tab_btn).setOnClickListener(v -> browserNewTabClicked());
@@ -107,112 +149,210 @@ public class BrowserControlsFragment extends Fragment {
         getActivity().findViewById(R.id.browser_controls_enter_location_btn).setOnClickListener(v -> browserEnterLocationClicked());
     }
 
-    private void showSoftwareKeyboard() {
-
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
-
-    }
-
     private void browserNewTabClicked() {
 
-        Toast.makeText(getActivity(), "Browser New Tab", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Browser New Tab");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.browserNewTab();
+        }
     }
 
     private void browserPreviousTabClicked() {
 
-        Toast.makeText(getActivity(), "Browser Previous Tab", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Browser Previous Tab");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.browserPreviousTab();
+        }
     }
 
     private void browserNextTabClicked() {
 
-        Toast.makeText(getActivity(), "Browser Next Tab", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Browser Next Tab");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.browserNextTab();
+        }
     }
 
     private void browserCloseTabClicked() {
 
-        Toast.makeText(getActivity(), "Browser Close Tab", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Browser Close Tab");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.browserCloseTab();
+        }
     }
 
     private void browserOpenFileClicked() {
 
-        Toast.makeText(getActivity(), "Browser Open File", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Browser Open File");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.browserOpenFile();
+        }
     }
 
     private void browserNewPrivateWindowClicked() {
 
-        Toast.makeText(getActivity(), "Browser New Private Window", Toast.LENGTH_SHORT).show();
+       Log.d(TAG, "Browser New Private Window");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.browserNewPrivateWindow();
+        }
     }
 
     private void browserReopenClosedTabClicked() {
 
-        Toast.makeText(getActivity(), "Browser Reopen Closed Tab", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Browser Reopen Closed Tab");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.browserReopenClosedTab();
+        }
     }
 
     private void browserCloseWindowClicked() {
 
-        Toast.makeText(getActivity(), "Browser Close Window", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Browser Close Window");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.browserCloseWindow();
+        }
     }
 
     private void browserShowDownloadsClicked() {
 
-        Toast.makeText(getActivity(), "Browser Show Downloads", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Browser Show Downloads");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.browserShowDownloads();
+        }
     }
 
     private void browserShowHistoryClicked() {
 
-        Toast.makeText(getActivity(), "Browser Show History", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Browser Show History");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.browserShowHistory();
+        }
     }
 
     private void browserShowSidebarClicked() {
 
-        Toast.makeText(getActivity(), "Browser Show Sidebar", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Browser Show Sidebar");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.browserShowSidebar();
+        }
     }
 
     private void browserShowPageSourceClicked() {
 
-        Toast.makeText(getActivity(), "Browser Show Page Source", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Browser Show Page Source");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.browserShowPageSource();
+        }
     }
 
     private void browserHomePageClicked() {
 
-        Toast.makeText(getActivity(), "Browser Home Page", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Browser Home Page");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.browserHomePage();
+        }
     }
 
     private void browserReloadPageClicked() {
 
-        Toast.makeText(getActivity(), "Browser Reload Page", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Browser Reload Page");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.browserReloadPage();
+        }
     }
 
     private void browserBookmarkPageClicked() {
 
-        Toast.makeText(getActivity(), "Browser Bookmark Page", Toast.LENGTH_SHORT).show();
+        Log.d( TAG, "Browser Bookmark Page");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.browserBookmarkPage();
+        }
     }
 
     private void browserEnterFullscreenClicked() {
 
-        Toast.makeText(getActivity(), "Browser Enter Fullscreen", Toast.LENGTH_SHORT).show();
+        Log.d( TAG, "Browser Enter Fullscreen");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.browserEnterFullscreen();
+        }
     }
 
     private void browserZoomOutClicked() {
 
-        Toast.makeText(getActivity(), "Browser Zoom Out", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Browser Zoom Out");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.browserZoomOut();
+        }
     }
 
     private void browserZoomActualSizeClicked() {
 
-        Toast.makeText(getActivity(), "Browser Zoom Actual Size", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Browser Zoom Actual Size");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.browserZoomActualSize();
+        }
     }
 
     private void browserZoomInClicked() {
 
-        Toast.makeText(getActivity(), "Browser Zoom In", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Browser Zoom In");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.browserZoomIn();
+        }
     }
 
     private void browserEnterLocationClicked() {
 
-        showSoftwareKeyboard();
+        // show custom keyboard
+        mKeyboardButton.setVisibility(View.GONE);
+        mMouseButton.setVisibility(View.GONE);
+        mBottomSheetKeyboard.setVisibility(View.VISIBLE);
 
-        Toast.makeText(getActivity(), "Browser Enter Location", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Browser Enter Location");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.browserEnterLocation();
+        }
     }
+
+
 }

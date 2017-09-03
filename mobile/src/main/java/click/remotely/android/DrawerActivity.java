@@ -207,6 +207,11 @@ public class DrawerActivity extends AppCompatActivity {
         }
     }
 
+    protected void navigationSelectItem(int itemId) {
+        mNavigationView.setCheckedItem(itemId);
+        mNavigationView.getMenu().performIdentifierAction(itemId, 0);
+    }
+
     private void startConsoleFragment() {
         Fragment fragment = new ConsoleFragment();
         FragmentManager fragmetManager = getSupportFragmentManager();
@@ -222,7 +227,26 @@ public class DrawerActivity extends AppCompatActivity {
     private void navigationViewUncheckItems() {
         int size = mNavigationView.getMenu().size();
         for (int i = 0; i < size; i++) {
-            mNavigationView.getMenu().getItem(i).setChecked(false);
+            MenuItem menuItem = mNavigationView.getMenu().getItem(i);
+            int sub_size = menuItem.getSubMenu().size();
+            for( int j=0; j < sub_size; j++){
+                mNavigationView.getMenu().getItem(i).getSubMenu().getItem(j).setChecked(false);
+            }
+        }
+    }
+
+    private void navigationViewCheckItemByTitle(String title) {
+        int size = mNavigationView.getMenu().size();
+        for (int i = 0; i < size; i++) {
+            MenuItem menuItem = mNavigationView.getMenu().getItem(i);
+            int sub_size = menuItem.getSubMenu().size();
+            for( int j=0; j < sub_size; j++){
+                String currentTitle = (String) mNavigationView.getMenu().getItem(i).getSubMenu().getItem(j).getTitle();
+                if(currentTitle.equals(title)) {
+                    mNavigationView.getMenu().getItem(i).getSubMenu().getItem(j).setChecked(true);
+                    return;
+                }
+            }
         }
     }
 
@@ -234,6 +258,7 @@ public class DrawerActivity extends AppCompatActivity {
             if(lastBackStackEntryCount >= 0) {
                 FragmentManager.BackStackEntry lastBackStackEntry = getSupportFragmentManager().getBackStackEntryAt(lastBackStackEntryCount);
                 setTitle(lastBackStackEntry.getName());
+                navigationViewCheckItemByTitle(lastBackStackEntry.getName());
             } else {
                 setTitle(getString(R.string.app_name));
             }

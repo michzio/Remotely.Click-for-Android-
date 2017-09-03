@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="click.remotely.android.fragments.MouseFragment">
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/mouse_background"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="horizontal"
         android:layout_weight="1">
         <Button
@@ -31,10 +37,55 @@
             android:text="" />
         <!-- style="@style/SelectableItemBackground" -->
     </LinearLayout>
-    <LinearLayout
+    <Button
         android:id="@+id/mouseTouchArea"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical"
+        android:background="#00FFFFFF"/>
 </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/mouse_fragment_fab_action_keyboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_keyboard_white_24dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:foregroundTint="@android:color/white"
+        android:tint="@android:color/white"
+        app:elevation="4dp"
+        android:scaleX="1.25"
+        android:scaleY="1.25"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="48dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/mouse_fragment_fab_action_mouse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_mouse_black_24dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:foregroundTint="@android:color/white"
+        android:tint="@android:color/white"
+        app:elevation="4dp"
+        android:scaleX="1.25"
+        android:scaleY="1.25"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="48dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp" />
+
+    <include
+        android:visibility="gone"
+        layout="@layout/bottom_sheet_keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

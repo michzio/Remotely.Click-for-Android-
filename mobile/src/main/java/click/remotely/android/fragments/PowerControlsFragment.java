@@ -2,12 +2,15 @@ package click.remotely.android.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import click.remotely.android.MainDrawerActivity;
 import click.remotely.android.R;
+import click.remotely.android.services.RemoteControllerClientService;
 
 /**
  * Created by michzio on 15/07/2017.
@@ -58,22 +61,42 @@ public class PowerControlsFragment extends Fragment {
 
     private void shutDownClicked() {
 
-        Toast.makeText(getActivity(), "Shut down", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Shut down");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.systemShutDown();
+        }
     }
 
     private void restartClicked() {
 
-        Toast.makeText(getActivity(), "Restart", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Restart");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.systemRestart();
+        }
     }
 
     private void sleepClicked() {
 
-        Toast.makeText(getActivity(), "Sleep", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Sleep");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.systemSleep();
+        }
     }
 
     private void logOutClicked() {
 
-        Toast.makeText(getActivity(), "Log out", Toast.LENGTH_SHORT).show();
+        Log.d(TAG,"Log out");
+
+        RemoteControllerClientService clientService = ((MainDrawerActivity) getActivity()).getClientService();
+        if(clientService != null) {
+            clientService.systemLogOut();
+        }
     }
 
 }

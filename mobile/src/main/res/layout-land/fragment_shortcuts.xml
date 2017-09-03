@@ -313,22 +313,22 @@
         app:srcCompat="@drawable/ic_close_window_black_24dp"
         app:layout_constraintStart_toEndOf="@id/shortcuts_print_btn"
         app:layout_constraintTop_toTopOf="@id/shortcuts_print_btn"
-        app:layout_constraintEnd_toStartOf="@id/shortcuts_force_quite_btn" />
+        app:layout_constraintEnd_toStartOf="@id/shortcuts_force_quit_btn" />
 
     <ImageButton
-        android:id="@+id/shortcuts_force_quite_btn"
+        android:id="@+id/shortcuts_force_quit_btn"
         android:layout_width="0dp"
         android:layout_height="64dp"
 
         android:adjustViewBounds="true"
         android:background="@drawable/selectable_background"
         android:tint="@android:color/white"
-        android:contentDescription="@string/shortcuts_force_quite"
+        android:contentDescription="@string/shortcuts_force_quit"
         android:padding="8dp"
         android:scaleType="fitCenter"
 
         app:layout_constraintDimensionRatio="w,1:1"
-        app:srcCompat="@drawable/ic_force_quite_black_24dp"
+        app:srcCompat="@drawable/ic_force_quit_black_24dp"
         app:layout_constraintStart_toEndOf="@id/shortcuts_close_window_btn"
         app:layout_constraintTop_toTopOf="@id/shortcuts_close_window_btn"
         app:layout_constraintEnd_toStartOf="@id/shortcuts_right_desktop_btn" />
@@ -348,8 +348,8 @@
 
         app:layout_constraintDimensionRatio="w,1:1"
         app:srcCompat="@drawable/ic_desktop_right_black_24dp"
-        app:layout_constraintStart_toEndOf="@id/shortcuts_force_quite_btn"
-        app:layout_constraintTop_toTopOf="@id/shortcuts_force_quite_btn"
+        app:layout_constraintStart_toEndOf="@id/shortcuts_force_quit_btn"
+        app:layout_constraintTop_toTopOf="@id/shortcuts_force_quit_btn"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageButton

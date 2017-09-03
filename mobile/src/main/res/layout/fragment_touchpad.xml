@@ -9,7 +9,7 @@
     android:background="@drawable/media_player_background">
 
     <click.remotely.inputs.TouchpadView
-        android:id="@+id/touchpadView"
+        android:id="@+id/touchpad_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -39,12 +39,14 @@
         android:layout_marginStart="8dp">
 
         <Button
+            android:id="@+id/touchpad_left_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableTop="@drawable/ic_mouse_left_black_24dp"
             android:theme="@style/AppTheme.ButtonLight" />
         <Button
+            android:id="@+id/touchpad_right_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -56,17 +58,26 @@
         android:id="@+id/touchpad_fab_action_keyboard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_keyboard_white_24dp"
+        android:layout_marginBottom="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"
         android:backgroundTint="@android:color/white"
         android:foregroundTint="@color/colorPrimary"
-        android:tint="@color/colorPrimary"
         android:scaleX="1.25"
         android:scaleY="1.25"
+        android:tint="@color/colorPrimary"
         app:elevation="4dp"
         app:layout_constraintBottom_toTopOf="@+id/touchpad_buttons_layout"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="48dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginRight="48dp"/>
+        app:srcCompat="@drawable/ic_keyboard_white_24dp" />
+
+    <include
+        android:visibility="gone"
+        layout="@layout/bottom_sheet_keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

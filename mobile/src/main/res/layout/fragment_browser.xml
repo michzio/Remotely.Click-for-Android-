@@ -463,4 +463,13 @@
         android:layout_marginStart="64dp"
         android:layout_marginLeft="64dp" />
 
+    <include
+        android:visibility="gone"
+        layout="@layout/bottom_sheet_keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

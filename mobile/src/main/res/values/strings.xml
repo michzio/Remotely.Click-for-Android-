@@ -127,6 +127,7 @@
     <string name="keyboard_plus">+</string>
     <string name="keyboard_backspace">\u232B</string>
     <string name="keyboard_tab">tab \u21B9</string>
+    <string name="keyboard_tab_symbol">\u21B9</string>
     <string name="keyboard_Q">q</string>
     <string name="keyboard_W">w</string>
     <string name="keyboard_E">e</string>
@@ -144,6 +145,7 @@
     <string name="keyboard_backslash">\\</string>
     <string name="keyboard_pipe">|</string>
     <string name="keyboard_caps_lock">caps \u21EA</string>
+    <string name="keyboard_caps_lock_symbol">\u21EA</string>
     <string name="keyboard_A">a</string>
     <string name="keyboard_S">s</string>
     <string name="keyboard_D">d</string>
@@ -158,6 +160,7 @@
     <string name="keyboard_quote">\'</string>
     <string name="keyboard_double_quote">\"</string>
     <string name="keyboard_enter">\u23CE</string>
+    <string name="keyboard_left_shift_symbol">\u21e7</string>
     <string name="keyboard_left_shift">shift \u21e7</string>
     <string name="keyboard_Z">z</string>
     <string name="keyboard_X">x</string>
@@ -173,18 +176,25 @@
     <string name="keyboard_slash">/</string>
     <string name="keyboard_question_mark">\?</string>
     <string name="keyboard_right_shift">\u21e7 shift</string>
+    <string name="keyboard_right_shift_symbol">\u21e7</string>
     <string name="keyboard_control">ctrl</string>
     <string name="keyboard_left_alt">alt \u2325</string>
+    <string name="keyboard_left_alt_symbol">\u2325</string>
     <string name="keyboard_left_command">cmd \u2318</string>
+    <string name="keyboard_left_command_symbol">\u2318</string>
     <string name="keyboard_space"></string>
     <string name="keyboard_right_command">\u2318 cmd</string>
+    <string name="keyboard_right_command_symbol">\u2318</string>
     <string name="keyboard_right_alt">\u2325 alt</string>
+    <string name="keyboard_right_alt_symbol">\u2325</string>
     <string name="keyboard_left_arrow">\u2190</string>
     <string name="keyboard_up_arrow">\u2191</string>
     <string name="keyboard_right_arrow">\u2192</string>
     <string name="keyboard_down_arrow">\u2193</string>
     <string name="keyboard_arrows">\u2190\u2191\u2192</string>
     <string name="keyboard_hide_arrows">X</string>
+    <string name="keyboard_symbols">!#@</string>
+    <string name="keyboard_alphanumeric">ABC</string>
 
     <string name="gamepad_dpad_left">\u2190</string>
     <string name="gamepad_dpad_right">\u2192</string>
@@ -247,7 +257,7 @@
     <string name="shortcuts_left_desktop">Left Desktop</string>
     <string name="shortcuts_right_desktop">Right Desktop</string>
     <string name="shortcuts_system_search">System Search</string>
-    <string name="shortcuts_force_quite">Force Quite</string>
+    <string name="shortcuts_force_quit">Force Quit</string>
 
     <string name="dialog_user_device_title">New User Device</string>
     <string name="dialog_user_device_action_save">Add</string>
@@ -269,8 +279,16 @@
     <string name="remote_device_details_host">Host address</string>
     <string name="remote_device_details_port_number">Port Number</string>
     <string name="remote_device_details_connect">Connect</string>
+    <string name="remote_device_details_disconnect">Disconnect</string>
 
     <string name="recycler_item_removed">Removed</string>
     <string name="recycler_item_undo">UNDO</string>
 
+    <string name="remote_controller_client_service_description">Remotely.Click - remote controller client service.</string>
+    <string name="remote_controller_client_service_notification_title">Connected to %1$s</string>
+    <string name="remote_controller_client_service_notification_text">Now, you can remotely control this device.</string>
+    <string name="remote_controller_client_service_notification_ticker">Remotely.Click connected to remote device: %1$s</string>
+
+    <string name="remotely_keyboard_label">Remotely Keyboard</string>
+    <string name="remotely_keyboard_subtype_en_US">English</string>
 </resources>
